@@ -12,7 +12,7 @@ const valoracionesModel = require('../models/valoracionesModels');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: './datos/recetas.db'
+    storage: '../datos/recetas.db'
 });
 
 const categorias = categoriasModel(sequelize);
