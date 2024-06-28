@@ -1,22 +1,20 @@
-module.exports = app => {
-    const ingredientesController = require('../controllers/ingredientes.controllers');
-
-    var router = require("express").Router();
+const express = require('express');
+const router = express.Router();
+const ingredientesController = require('../controllers/ingredientesController');
 
     // Crear un nuevo ingrediente
-    router.post("/", ingredientesController.create);
+router.post("/", ingredientesController.create);
 
     // Recuperar todos los ingredientes
-    router.get("/", ingredientesController.findAll);
+router.get("/", ingredientesController.findAll);
 
     // Recuperar un ingrediente por id
-    router.get("/:id", ingredientesController.findOne);
+router.get("/:id", ingredientesController.findOne);
 
     // Actualizar un ingrediente por id
-    router.put("/:id", ingredientesController.update);
+router.put("/:id", ingredientesController.update);
 
     // Eliminar un ingrediente por id
-    router.delete("/:id", ingredientesController.delete);
+router.delete("/:id", ingredientesController.delete);
 
-    app.use('/api/ingredientes', router);
-};
+module.exports = router;

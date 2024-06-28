@@ -1,22 +1,21 @@
-module.exports = app => {
-    const recetasController = require('../controllers/recetas.controllers');
+const express = require('express');
+const router = express.Router();
+const recetasController = require('../controllers/recetasController');
 
-    var router = require("express").Router();
 
     // Crear una nueva receta
-    router.post("/", recetasController.create);
+router.post("/", recetasController.create);
 
     // Recuperar todas las recetas
-    router.get("/", recetasController.findAll);
+router.get("/", recetasController.findAll);
 
     // Recuperar una receta por id
-    router.get("/:id", recetasController.findOne);
+router.get("/:id", recetasController.findOne);
 
     // Actualizar una receta por id
-    router.put("/:id", recetasController.update);
+router.put("/:id", recetasController.update);
 
     // Eliminar una receta por id
-    router.delete("/:id", recetasController.delete);
+router.delete("/:id", recetasController.delete);
 
-    app.use('/api/recetas', router);
-};
+module.exports = router;

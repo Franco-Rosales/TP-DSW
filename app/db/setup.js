@@ -8,11 +8,11 @@ const ingredientesRecetasModel = require('../models/ingredientesRecetasMedidasMo
 const recetasCategoriasModel = require('../models/recetasCategoriasModels');
 const medidasModel = require('../models/medidasModels');
 const pasosPreparacionModel = require('../models/pasosPreparacionModels');
-const valoracionesModel = require('../models/valoracionesModels');
+const valoracionesModel = require('../models/valoracionesModel');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: '../datos/recetas.db'
+    storage: './datos/recetas.db',
 });
 
 const categorias = categoriasModel(sequelize);
