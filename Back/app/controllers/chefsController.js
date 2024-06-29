@@ -1,115 +1,109 @@
 const db = require('../db/setup');
-const Usuarios = db.usuarios;
+const Chefs = db.chefs;
 const { Op } = require('sequelize');
 
-// Crear un nuevo usuario
 exports.create = (req, res) => {
-    // Validar la petición
-    if (!req.body.nombre || !req.body.email) {
+    if (!req.body.nombre || !req.body.biografia || !req.body.cantidad_recetas || !req.body.fecha_nacimiento) {
         res.status(400).send({
-            message: "Los campos nombre y email son requeridos."
+            message: "Los campos nombre, biografia, cantidad_recetas y fecha_nacimiento son requeridos."
         });
         return;
     }
 
-    // Crear el usuario
-    const usuario = {
+    const chef = {
         nombre: req.body.nombre,
-        email: req.body.email
+        biografia: req.body.biografia,
+        cantidad_recetas: req.body.cantidad_recetas,
+        fecha_nacimiento: req.body.fecha_nacimiento
     };
 
-    // Guardar el usuario en la base de datos
-    Usuarios.create(usuario)
+    Chefs.create(chef)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Ocurrió un error al crear el usuario."
+                message: err.message || "Ocurrió un error al crear el chef."
             });
         });
 };
 
-// Recuperar todos los usuarios
 exports.findAll = (req, res) => {
-    Usuarios.findAll()
+    Chefs.findAll()
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Ocurrió un error al recuperar los usuarios."
+                message: err.message || "Ocurrió un error al recuperar los chefs."
             });
         });
 };
 
-// Recuperar un usuario por id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Usuarios.findByPk(id)
+    Chefs.findByPk(id)
         .then(data => {
             if (data) {
                 res.send(data);
             } else {
                 res.status(404).send({
-                    message: `No se encontró el usuario con id=${id}.`
+                    message: `No se encontró al chef con id=${id}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Ocurrió un error al recuperar el usuario con id=" + id
+                message: "Ocurrió un error al recuperar al chef con id=" + id
             });
         });
 };
 
-// Actualizar un usuario por id
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Usuarios.update(req.body, {
+    Chefs.update(req.body, {
         where: { id: id }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "¡El usuario se actualizó exitosamente!"
+                    message: "¡El chef se actualizó exitosamente!"
                 });
             } else {
                 res.send({
-                    message: `No se pudo actualizar el usuario con id=${id}.`
+                    message: `No se pudo actualizar al chef con id=${id}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Ocurrió un error al actualizar el usuario con id=" + id
+                message: "Ocurrió un error al actualizar al chef con id=" + id
             });
         });
 };
 
-// Eliminar un usuario por id
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Usuarios.destroy({
+    Chefs.destroy({
         where: { id: id }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "¡El usuario se eliminó exitosamente!"
+                    message: "¡El chef se eliminó exitosamente!"
                 });
             } else {
                 res.send({
-                    message: `No se pudo eliminar el usuario con id=${id}.`
+                    message: `No se pudo eliminar al chef con id=${id}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Ocurrió un error al eliminar el usuario con id=" + id
+                message: "Ocurrió un error al eliminar al chef con id=" + id
             });
         });
 };

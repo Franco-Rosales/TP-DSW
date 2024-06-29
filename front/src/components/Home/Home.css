@@ -1,0 +1,17 @@
+.home-container {
+    background-color: #F9F9F9; 
+    border-radius: 10px;
+}
+
+.recipe-img {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 350px;
+}
+
+.page-title {
+    color: #333;
+    font-weight: 600px;
+    max-width: 500px; 
+    text-align: center;
+}

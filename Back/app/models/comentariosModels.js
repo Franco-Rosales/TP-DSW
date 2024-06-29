@@ -24,8 +24,6 @@ const ComentarioModel = (sequelize) => {
 
     // Definición de relaciones
     Comentario.associate = (models) => {
-        // Relación muchos a uno con Usuario
-        Comentario.belongsTo(models.Usuario, { foreignKey: 'usuario_id' });
 
         // Relación muchos a uno con Receta
         Comentario.belongsTo(models.Receta, { foreignKey: 'receta_id' });

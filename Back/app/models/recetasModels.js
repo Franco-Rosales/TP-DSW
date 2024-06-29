@@ -23,6 +23,13 @@ const RecetaModel = (sequelize) => {
             },
             fecha_creacion: {
                 type: DataTypes.DATE
+            },
+            chef_id: { 
+                type: DataTypes.INTEGER,
+                references: {
+                    model: 'chefs', 
+                    key: 'id'
+                }
             }
         },
         {
@@ -50,6 +57,8 @@ const RecetaModel = (sequelize) => {
 
         // Relación uno a muchos con Valoraciones
         Receta.hasMany(models.Valoracion, { foreignKey: 'receta_id' });
+
+        Receta.belongsTo(models.Chef, { foreignKey: 'chef_id' });
     };
 
     return Receta;

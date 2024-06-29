@@ -1,0 +1,14 @@
+.navbar-bg {
+    background-color: #8A6E8B; 
+  }
+  .nav-link {
+    color: #F0E5F5;
+  }
+  .nav-link.active {
+    background-color: #C5ADC5;
+    color: #8A6E8B;
+  }
+  .nav-link:hover {
+    background-color: #C5ADC5;
+    color: #8A6E8B;
+  }

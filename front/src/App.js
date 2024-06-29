@@ -1,12 +1,13 @@
-import React from 'react';
+import { Routes, Route} from 'react-router-dom';
+import { Home } from './components/Home/Home';
+import { Recetas } from './components/Recetas/Recetas';
 
 function App() {
   return (
-    <>
-      <div className='container text-center'>
-        <h1 className='mt-5'>Welcome to the React App</h1>
-      </div>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/recetas" element={<Recetas />} />
+      </Routes>
   );
 }
 
