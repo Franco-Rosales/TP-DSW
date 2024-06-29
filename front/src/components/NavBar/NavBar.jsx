@@ -15,6 +15,9 @@ export const NavBar = () => {
         <Nav.Item>
           <Nav.Link as={Link} to="/recetas" className='nav-link text-light'>Recetas</Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} to="/listar" className='nav-link text-light'>Listar Recetas</Nav.Link>
+        </Nav.Item>
       </Nav>
     </>
   );
