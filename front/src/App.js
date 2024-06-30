@@ -1,7 +1,7 @@
 import { Routes, Route} from 'react-router-dom';
 import { Home } from './components/Home/Home';
 import { Recetas } from './components/Recetas/Recetas';
-import Listado, { ListarReceta } from './components/Listado/Listado'
+import { ListarReceta } from './components/Recetas/Listado'
 
 function App() {
   return (

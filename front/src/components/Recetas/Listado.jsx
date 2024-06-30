@@ -1,6 +1,6 @@
 import { NavBar } from "../NavBar/NavBar";
 
-export const ListarReceta = ({receta}) => {
+export const ListarReceta = ({recetas}) => {   
     return (
         <>
         <NavBar/>
@@ -17,8 +17,8 @@ export const ListarReceta = ({receta}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {receta &&
-                    receta.map((r) => {
+                {recetas &&
+                    recetas.map((r) => {
                     return (
                         <tr>
                         <td scope="row">{r.id}</td>

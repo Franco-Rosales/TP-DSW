@@ -26,7 +26,10 @@ app.use(cors());
 // Usa db.iniciar(true) para resetear estructura y datos si es necesario
 db.iniciar();
 
+
+
 // Rutas
+
 app.use('/api/valoraciones', valoracionesRoutes);
 app.use('/api/categorias', categoriasRoutes);
 app.use('/api/comentarios', comentariosRoutes);
