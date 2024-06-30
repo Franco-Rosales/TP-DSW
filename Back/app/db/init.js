@@ -3,4 +3,5 @@ const crearDatos = async () => {
     // Aquí no hacemos nada, solo dejamos la función como placeholder
 };
 
+
 module.exports = crearDatos;

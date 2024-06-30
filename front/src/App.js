@@ -1,7 +1,7 @@
 import { Routes, Route} from 'react-router-dom';
 import { Home } from './components/Home/Home';
 import { Recetas } from './components/Recetas/Recetas';
-import { ListarReceta } from './components/Listado/Listado'
+import { ListarReceta } from './components/Recetas/Listado'
 import { Chefs } from './components/Chefs/Chefs';
 import { EditarChef } from './components/Chefs/EditarChef';
 
