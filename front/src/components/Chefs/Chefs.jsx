@@ -28,7 +28,7 @@ export const Chefs = () => {
             setChefs(response.data)
         } catch (error) {
             console.error('Error al traer los datos de los chefs:', error);
-          }
+        }
     }
 
     const deleteChef = async (id) => {

@@ -5,9 +5,10 @@ const { Op } = require('sequelize');
 // Crear una nueva receta
 exports.create = (req, res) => {
     // Validar la petición
-    if (!req.body.nombre || !req.body.descripcion || !req.body.instrucciones || !req.body.tiempo_preparacion) {
+    if (!req.body.nombre || !req.body.descripcion || !req.body.instrucciones || !req.body.tiempo_preparacion 
+        || !req.body.chef_id) {
         res.status(400).send({
-            message: "Los campos nombre, descripcion, instrucciones y tiempo_preparacion son requeridos."
+            message: "Los campos nombre, descripcion, instrucciones y tiempo_preparacion, chef son requeridos."
         });
         return;
     }
@@ -18,7 +19,8 @@ exports.create = (req, res) => {
         descripcion: req.body.descripcion,
         instrucciones: req.body.instrucciones,
         tiempo_preparacion: req.body.tiempo_preparacion,
-        fecha_creacion: new Date()
+        fecha_creacion: new Date(),
+        chef_id: req.body.chef_id
     };
 
     // Guardar la receta en la base de datos

@@ -18,7 +18,6 @@ export const EditarChef = () => {
         try {
             const chefDatos = await axios.get(`http://localhost:3001/api/chefs/${id}`);
             setChef(chefDatos.data);
-            console.log(chefDatos.data);
         } catch (error) { 
             console.error('Error al traer los datos del chef:', error);
         }
@@ -95,7 +94,6 @@ export const EditarChef = () => {
                         <input className="btn btn-success ms-2" type="submit" value={'Actualizar'} />
                     </div>
             </form>
-
         </>
     );
 }

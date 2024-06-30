@@ -4,15 +4,16 @@ import { Recetas } from './components/Recetas/Recetas';
 import { ListarReceta } from './components/Recetas/Listado'
 import { Chefs } from './components/Chefs/Chefs';
 import { EditarChef } from './components/Chefs/EditarChef';
+import { EditarReceta } from './components/Recetas/EditarReceta';
 
 function App() {
   return (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/recetas" element={<Recetas />} />
-        <Route path="/listar" element={<ListarReceta />} />
-        <Route path='/chefs' element={<Chefs/>}/>
-        <Route path='/chef/:id' element={<EditarChef/>}/>
+        <Route path="receta/:id" element={<EditarReceta/>}/>
+        <Route path="/chefs" element={<Chefs/>}/>
+        <Route path="/chef/:id" element={<EditarChef/>}/>
       </Routes>
   );
 }
