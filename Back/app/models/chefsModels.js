@@ -33,6 +33,8 @@ const ChefModel = (sequelize) => {
         Chef.hasMany(models.Receta, { foreignKey: 'chef_id' });
     };
 
+    return Chef;
+
 }
 
 module.exports = ChefModel;

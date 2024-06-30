@@ -8,7 +8,7 @@ const recetasCategoriasModel = require('../models/recetasCategoriasModels');
 const medidasModel = require('../models/medidasModels');
 const pasosPreparacionModel = require('../models/pasosPreparacionModels');
 const valoracionesModel = require('../models/valoracionesModel');
-const ChefsModel = require('../models/chefsModels');
+const chefsModel = require('../models/chefsModels');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -24,7 +24,7 @@ const recetasCategorias = recetasCategoriasModel(sequelize);
 const medidas = medidasModel(sequelize);
 const pasosPreparacion = pasosPreparacionModel(sequelize);
 const valoraciones = valoracionesModel(sequelize);
-const chefs = ChefsModel(sequelize);
+const chefs = chefsModel(sequelize);
 
 
 const iniciar = async (reset = false) => {
