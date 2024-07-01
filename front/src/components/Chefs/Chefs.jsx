@@ -92,23 +92,23 @@ export const Chefs = () => {
                             chefs.map((c) => {
                             return (
                                 <tr key={c.id}>
-                                <td>{c.nombre}</td>
-                                <td>{c.biografia}</td>
-                                <td>{c.cantidad_recetas}</td>
-                                <td>{c.fecha_nacimiento}</td>
-                                <td>
-                                    <button
-                                    className="btn btn-default"
-                                    onClick={() => deleteChef(c.id)}
-                                    >
-                                    <i className="bi bi-trash3 text-danger"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <Link className="btn btn-default" to={`/chef/${c.id}`} >
-                                        <i className="bi bi-pencil text-primary"></i>
-                                    </Link>
-                                </td>
+                                    <td>{c.nombre}</td>
+                                    <td>{c.biografia}</td>
+                                    <td>{c.cantidad_recetas}</td>
+                                    <td>{c.fecha_nacimiento}</td>
+                                    <td>
+                                        <button
+                                        className="btn btn-default"
+                                        onClick={() => deleteChef(c.id)}
+                                        >
+                                        <i className="bi bi-trash3 text-danger"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <Link className="btn btn-default" to={`/chef/${c.id}`} >
+                                            <i className="bi bi-pencil text-primary"></i>
+                                        </Link>
+                                    </td>
                                 </tr>
                             );
                             })}

@@ -125,7 +125,7 @@ export const Noticias = () => {
                                         <button className="btn btn-default me-2" onClick={() => onDelete(noticia.id)}>
                                             <i className="bi bi-trash3 text-danger"></i>
                                         </button>
-                                        <Link className="btn btn-default" to={`/noticias/${noticia.id}`}>
+                                        <Link className="btn btn-default" to={`/noticia/${noticia.id}`}>
                                             <i className="bi bi-pencil text-primary"></i>
                                         </Link>
                                     </td>

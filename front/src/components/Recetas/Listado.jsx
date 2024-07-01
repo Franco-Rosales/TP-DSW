@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { NavBar } from "../NavBar/NavBar";
+//import { NavBar } from "../NavBar/NavBar";
 
 export const ListarReceta = ({recetas, deleteReceta}) => {   
 
