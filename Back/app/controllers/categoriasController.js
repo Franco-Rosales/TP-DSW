@@ -14,7 +14,8 @@ exports.create = (req, res) => {
 
   // Crear una categoría
   const categoria = {
-    nombre: req.body.nombre
+    nombre: req.body.nombre,
+    descripcion: req.body.descripcion
   };
 
   // Guardar la categoría en la base de datos
@@ -33,9 +34,10 @@ exports.create = (req, res) => {
 // Recupera todas las categorías de la base de datos
 exports.findAll = (req, res) => {
   const nombre = req.query.nombre;
-  var condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
+  let condicion = [];
+  nombre && condicion.push({ nombre: { [Op.like]: `%${nombre}%` } });
 
-  Categoria.findAll({ where: condition })
+  Categoria.findAll({ where: condicion, include: {all: true} })
     .then(data => {
       res.send(data);
     })
