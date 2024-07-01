@@ -11,7 +11,15 @@ const CategoriaModel = (sequelize) => {
             },
             nombre: {
                 type: DataTypes.STRING
+            },
+            descripcion: {
+                type: DataTypes.STRING
+            },
+            fecha_agregado: {
+                type: DataTypes.DATEONLY,
+                defaultValue: DataTypes.NOW
             }
+
         },
         {
             timestamps: false,
