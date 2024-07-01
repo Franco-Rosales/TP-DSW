@@ -7,6 +7,7 @@ import { EditarChef } from './components/Chefs/EditarChef';
 import { EditarReceta } from './components/Recetas/EditarReceta';
 import { Comentarios } from './components/Comentarios/Comentarios';
 import { EditarComentario } from './components/Comentarios/EditarComentario';
+import { Categorias } from './components/Categorias/Categorias';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/chef/:id" element={<EditarChef/>}/>
         <Route path="/comentarios" element={<Comentarios/>}/>
         <Route path="/comentarios/:id" element={<EditarComentario/>}/>
+        <Route path="/categorias" element={<Categorias/>}/>
       </Routes>
   );
 }
