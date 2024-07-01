@@ -22,7 +22,7 @@ const RecetaModel = (sequelize) => {
                 type: DataTypes.INTEGER
             },
             fecha_creacion: {
-                type: DataTypes.DATE
+                type: DataTypes.DATEONLY
             },
             chef_id: { 
                 type: DataTypes.INTEGER,

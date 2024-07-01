@@ -20,7 +20,7 @@ const ChefModel = (sequelize) => {
                 type: DataTypes.INTEGER
             },
             fecha_nacimiento: {
-                type: DataTypes.DATE
+                type: DataTypes.DATEONLY
             },
         },
         {
