@@ -91,7 +91,7 @@ export const Chefs = () => {
                         {chefs &&
                             chefs.map((c) => {
                             return (
-                                <tr>
+                                <tr key={c.id}>
                                 <td>{c.nombre}</td>
                                 <td>{c.biografia}</td>
                                 <td>{c.cantidad_recetas}</td>

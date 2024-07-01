@@ -9,6 +9,8 @@ const medidasModel = require('../models/medidasModels');
 const pasosPreparacionModel = require('../models/pasosPreparacionModels');
 const valoracionesModel = require('../models/valoracionesModel');
 const chefsModel = require('../models/chefsModels');
+const noticiasModel = require('../models/noticiasModels');
+
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -25,6 +27,8 @@ const medidas = medidasModel(sequelize);
 const pasosPreparacion = pasosPreparacionModel(sequelize);
 const valoraciones = valoracionesModel(sequelize);
 const chefs = chefsModel(sequelize);
+const noticias = noticiasModel(sequelize);
+
 
 
 const iniciar = async (reset = false) => {
@@ -39,5 +43,5 @@ const iniciar = async (reset = false) => {
     }
 };
 
-const db = { iniciar, categorias, comentarios, ingredientes, recetas, ingredientesRecetas, recetasCategorias, medidas, pasosPreparacion, valoraciones, chefs };
+const db = { iniciar, categorias, comentarios, ingredientes, recetas, ingredientesRecetas, recetasCategorias, medidas, pasosPreparacion, valoraciones, chefs, noticias };
 module.exports = db;

@@ -5,6 +5,7 @@ import { ListarReceta } from './components/Recetas/Listado'
 import { Chefs } from './components/Chefs/Chefs';
 import { EditarChef } from './components/Chefs/EditarChef';
 import { EditarReceta } from './components/Recetas/EditarReceta';
+import { Noticias } from './components/Noticias/Noticias';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="receta/:id" element={<EditarReceta/>}/>
         <Route path="/chefs" element={<Chefs/>}/>
         <Route path="/chef/:id" element={<EditarChef/>}/>
+        <Route path="/noticias" element={<Noticias/>}/>
       </Routes>
   );
 }

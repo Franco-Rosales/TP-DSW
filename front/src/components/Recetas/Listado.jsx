@@ -26,7 +26,7 @@ export const ListarReceta = ({recetas, deleteReceta}) => {
                 {recetas &&
                     recetas.map((r) => {
                     return (
-                        <tr>
+                        <tr key={r.id}>
                         <td>{r.nombre}</td>
                         <td>{r.descripcion}</td>
                         <td>{r.instrucciones}</td>
