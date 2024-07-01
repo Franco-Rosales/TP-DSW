@@ -13,7 +13,7 @@ const ComentarioModel = (sequelize) => {
                 type: DataTypes.TEXT
             },
             fecha_creacion: {
-                type: DataTypes.DATE
+                type: DataTypes.DATEONLY
             }
         },
         {
