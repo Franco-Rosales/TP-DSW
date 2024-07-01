@@ -1,34 +1,37 @@
 const { DataTypes } = require('sequelize');
 
-const ValoracionModel = (sequelize) => {
-    const Valoracion = sequelize.define(
-        'Valoracion',
+const DificultadModel = (sequelize) => {
+    const Dificultad = sequelize.define(
+        'Dificultad',
         {
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true
             },
+            descripcion: {
+                type: DataTypes.STRING
+            },
             valor: {
                 type: DataTypes.INTEGER
-            }
+            },
+            fechaCarga: {
+                type: DataTypes.DATEONLY
+            },
         },
         {
             timestamps: false,
-            tableName: 'valoraciones'
+            tableName: 'dificultad'
         }
     );
 
     // Definición de relaciones
-    Valoracion.associate = (models) => {
-        // Relación muchos a uno con Usuario
-        Valoracion.belongsTo(models.Usuario, { foreignKey: 'usuario_id' });
-
+    Dificultad.associate = (models) => {
         // Relación muchos a uno con Receta
-        Valoracion.belongsTo(models.Receta, { foreignKey: 'receta_id' });
+        Dificultad.belongsTo(models.Receta, { foreignKey: 'receta_id' });
     };
 
-    return Valoracion;
+    return Dificultad;
 };
 
-module.exports = ValoracionModel;
+module.exports = DificultadModel;

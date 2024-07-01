@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 
-const CategoriaModel = (sequelize) => {
-    const Categoria = sequelize.define(
-        'Categoria',
+const ContactoModel = (sequelize) => {
+    const contacto = sequelize.define(
+        'contacto',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -12,31 +12,31 @@ const CategoriaModel = (sequelize) => {
             nombre: {
                 type: DataTypes.STRING
             },
-            descripcion: {
+            apellido: {
+                type: DataTypes.STRING
+            },
+            email: {
+                type: DataTypes.STRING
+            },
+            telefono : {
+                type: DataTypes.STRING
+            
+            },
+            mensaje : {
                 type: DataTypes.STRING
             },
             fecha_agregado: {
                 type: DataTypes.DATEONLY,
                 defaultValue: DataTypes.NOW
             }
-
         },
         {
             timestamps: false,
-            tableName: 'categorias'
+            tableName: 'contacto'
         }
-    );
+    ); 
 
-    // Definición de relaciones
-    Categoria.associate = (models) => {
-        // Relación muchos a muchos con Recetas
-        Categoria.belongsToMany(models.Receta, {
-            through: 'RecetasCategorias',
-            foreignKey: 'categoria_id'
-        });
-    };
-
-    return Categoria;
+    return contacto;
 };
 
-module.exports = CategoriaModel;
+module.exports = ContactoModel;
