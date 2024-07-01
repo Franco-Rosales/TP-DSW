@@ -5,6 +5,9 @@ import { ListarReceta } from './components/Recetas/Listado'
 import { Chefs } from './components/Chefs/Chefs';
 import { EditarChef } from './components/Chefs/EditarChef';
 import { EditarReceta } from './components/Recetas/EditarReceta';
+import { Comentarios } from './components/Comentarios/Comentarios';
+import { EditarComentario } from './components/Comentarios/EditarComentario';
+
 
 function App() {
   return (
@@ -14,6 +17,8 @@ function App() {
         <Route path="receta/:id" element={<EditarReceta/>}/>
         <Route path="/chefs" element={<Chefs/>}/>
         <Route path="/chef/:id" element={<EditarChef/>}/>
+        <Route path="/comentarios" element={<Comentarios/>}/>
+        <Route path="/comentarios/:id" element={<EditarComentario/>}/>
       </Routes>
   );
 }
