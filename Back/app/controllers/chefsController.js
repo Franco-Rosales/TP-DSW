@@ -29,7 +29,10 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Chefs.findAll()
+    const { nombre_like } = req.query;
+    let condition = nombre_like ? { nombre: { [Op.like]: `%${nombre_like}%` } } : null;
+
+    Chefs.findAll({ where: condition })
         .then(data => {
             res.send(data);
         })

@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 export const Comentarios = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [comentarios, setComentarios] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
     const [chefs, setChefs] = useState([]);
     const [recetas, setRecetas] = useState([]);
@@ -27,9 +28,9 @@ export const Comentarios = () => {
         navigate('/');
     }
 
-    const getComentarios = async () => {
+    const getComentarios = async (search = '') => {
         try {
-            const response = await axios.get("http://localhost:3001/api/comentarios");
+            const response = await axios.get(`http://localhost:3001/api/comentarios?contenido=${search}`);
             console.log('Datos de comentarios obtenidos:', response.data); // Verificar los datos obtenidos
             setComentarios(response.data);
         } catch (error) {
@@ -62,6 +63,10 @@ export const Comentarios = () => {
           }
     };
 
+    const handleSearch = async () => {
+        await getComentarios(searchTerm);
+    };
+
     useEffect(() => {
         getComentarios();
         getChefs();
@@ -73,6 +78,17 @@ export const Comentarios = () => {
             <NavBar />
             <div className="container text-center">
                 <h1>Comentarios</h1>
+                    <div className="d-flex justify-content-start mb-4">
+                        <input
+                            type="text"
+                            className="form-control me-2"
+                            placeholder="Buscar comentarios"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{ maxWidth: '300px' }}
+                        />
+                        <button className="btn btn-primary" onClick={handleSearch}>Buscar</button>
+                    </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="col-6 mx-auto">
                     <div className="form-floating mb-3">
                         <input type="text" className="form-control" {...register('contenido', { required: true })} />

@@ -37,7 +37,10 @@ exports.create = (req, res) => {
 
 // Recuperar todas las recetas
 exports.findAll = (req, res) => {
-    Recetas.findAll()
+    const nombre = req.query.nombre;
+    const condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
+
+    Recetas.findAll({ where: condition })
         .then(data => {
             res.send(data);
         })
