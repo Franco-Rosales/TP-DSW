@@ -12,11 +12,11 @@ const IngredienteModel = (sequelize) => {
             nombre: {
                 type: DataTypes.STRING
             },
-            cantidad: {
-                type: DataTypes.FLOAT
+            popularidad: {
+                type: DataTypes.INTEGER,
             },
-            unidad: {
-                type: DataTypes.STRING
+            fecha_agregado: {
+                type: DataTypes.DATEONLY
             }
         },
         {
@@ -25,17 +25,12 @@ const IngredienteModel = (sequelize) => {
         }
     );
 
-    // Definición de relaciones
     Ingrediente.associate = (models) => {
-        // Relación muchos a uno con Receta
-        Ingrediente.belongsTo(models.Receta, { foreignKey: 'receta_id' });
-
-        // Relación muchos a muchos con Medidas
-        Ingrediente.belongsToMany(models.Medida, {
-            through: 'IngredientesRecetasMedidas',
+        Ingrediente.belongsToMany(models.Receta, {
+            through: models.RecetaIngrediente,
             foreignKey: 'ingrediente_id'
         });
-    };
+    }
 
     return Ingrediente;
 };

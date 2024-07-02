@@ -65,7 +65,7 @@ export const Chefs = () => {
                     {errors.cantidad_recetas && <span>Este campo es obligatorio</span>}
                 </div>
                 <div className="form-floating mb-3">
-                <input type="text" className="form-control" {...register('fecha_nacimiento', { required: true })}/>
+                <input type="date" className="form-control" {...register('fecha_nacimiento', { required: true })}/>
                     <label htmlFor="floatingInput">Fecha de nacimiento</label>
                     {errors.fecha_nacimiento && <span>Este campo es obligatorio</span>}
                 </div>

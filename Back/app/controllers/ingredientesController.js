@@ -5,9 +5,9 @@ const { Op } = require('sequelize');
 // Crear y guardar un nuevo ingrediente
 exports.create = (req, res) => {
     // Validar la petición
-    if (!req.body.nombre || !req.body.cantidad || !req.body.unidad) {
+    if (!req.body.nombre || !req.body.popularidad || !req.body.fecha_agregado) {
         res.status(400).send({
-            message: "El nombre, cantidad y unidad no pueden estar vacíos!"
+            message: "El nombre, popularidad y fecha_agregado no pueden estar vacíos!"
         });
         return;
     }
@@ -15,9 +15,8 @@ exports.create = (req, res) => {
     // Crear un ingrediente
     const ingrediente = {
         nombre: req.body.nombre,
-        cantidad: req.body.cantidad,
-        unidad: req.body.unidad,
-        receta_id: req.body.receta_id
+        popularidad: req.body.popularidad,
+        fecha_agregado: req.body.fecha_agregado,
     };
 
     // Guardar ingrediente en la base de datos

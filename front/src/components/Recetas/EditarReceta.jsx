@@ -101,7 +101,7 @@ export const EditarReceta = () => {
                         </div>
                     <div className="row mt-3">
                         <div className="col-4 text-end">
-                            <label htmlFor="tiempo_preparacion">Chef:</label>
+                            <label htmlFor="chef">Chef:</label>
                         </div>
                         <div className="col-8 text-start">
                             <select className="form-select" 

@@ -14,6 +14,7 @@ const pasosPreparacionRoutes = require('./app/routes/pasosPreparacionRoutes');
 const recetasCategoriasRoutes = require('./app/routes/recetasCategoriasRoutes');
 const recetasRoutes = require('./app/routes/recetasRoutes');
 const chefsRoutes = require('./app/routes/chefsRoutes');
+const recetaIngredientesRoute = require('./app/routes/recetasIngredientesRoutes');
 
 // Inicializar la aplicación Express
 const app = express();
@@ -40,6 +41,7 @@ app.use('/api/pasos-preparacion', pasosPreparacionRoutes);
 app.use('/api/recetas-categorias', recetasCategoriasRoutes);
 app.use('/api/recetas', recetasRoutes);
 app.use('/api/chefs', chefsRoutes);
+app.use('/api/recetas-ingredientes', recetaIngredientesRoute);
 
 // Otras rutas aquí si las tienes
 // app.use('/api/otra-ruta', otraRuta);

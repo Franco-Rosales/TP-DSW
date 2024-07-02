@@ -47,7 +47,10 @@ const RecetaModel = (sequelize) => {
         });
 
         // Relación uno a muchos con Ingredientes
-        Receta.hasMany(models.Ingrediente, { foreignKey: 'receta_id' });
+        Receta.belongsToMany(models.Ingrediente, {
+            through: models.RecetaIngrediente,
+            foreignKey: 'receta_id'
+        });
 
         // Relación uno a muchos con Pasos de Preparación
         Receta.hasMany(models.PasoPreparacion, { foreignKey: 'receta_id' });
