@@ -11,6 +11,7 @@ export const RecetaIngrediente = () => {
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [editarRecetaIngredienteId, setEditarRecetaIngredienteId] = useState(null);
     const [recetaIngrediente, setRecetaIngrediente] = useState({});
+    const [nombreFiltro, setNombreFiltro] = useState('');
 
     const cancelar = () => {
         setMostrarFormulario(false);
@@ -83,6 +84,16 @@ export const RecetaIngrediente = () => {
         getRecetasIngredientes();
     }, []);
 
+    function handleBuscar() {
+        let url = "http://localhost:3001/api/recetas-ingredientes/";
+        if (nombreFiltro) {
+            url += `${nombreFiltro}&`;
+        }
+        axios.get(url).then(response => {
+            setRecetasIngredientes(response.data);
+        });
+    }
+
     return (
         <>
             <NavBar />
@@ -92,13 +103,29 @@ export const RecetaIngrediente = () => {
                 <br />
                 {!mostrarFormulario ? (
                     <>
-                        <button
-                            type="button"
-                            className="btn btn-success mb-3"
-                            onClick={() => setMostrarFormulario(true)}
-                        >
-                            Agregar nuevo ingrediente a receta
-                        </button>
+                        <div className="d-flex align-items-center justify-content-between mb-3">
+                            <div className="d-flex align-items-center" style={{ gap: '10px' }}>
+                                <div className="form-floating" style={{ flex: '1' }}>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="floatingInput"
+                                        placeholder="Buscar Nombre de ingrediente"
+                                        value={nombreFiltro}
+                                        onChange={(e) => setNombreFiltro(e.target.value)}
+                                    />
+                                    <label htmlFor="floatingInput">Buscar Ingrediente</label>
+                                </div>
+                                <button type="button" className="btn btn-primary" onClick={handleBuscar}>Buscar</button>
+                            </div>
+                            <button
+                                type="button"
+                                className="btn btn-success"
+                                onClick={() => setMostrarFormulario(true)}
+                            >
+                                Nuevo Ing Receta
+                            </button>
+                        </div>
                         <table className="table mt-5 mx-3">
                             <thead>
                                 <tr>

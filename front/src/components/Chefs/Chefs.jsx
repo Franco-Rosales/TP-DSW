@@ -67,7 +67,7 @@ export const Chefs = () => {
 
     useEffect(() => {
         getChefs();
-    });
+    }, []);
 
     return (
         <>

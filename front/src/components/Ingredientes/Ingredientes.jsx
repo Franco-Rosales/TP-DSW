@@ -10,6 +10,7 @@ export const Ingredientes = () => {
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [editarIngredienteId, setEditarIngredienteId] = useState(null);
     const [ingrediente, setIngrediente] = useState({});
+    const [nombreFiltro, setNombreFiltro] = useState('');
 
     const cancelar = () => {
         setMostrarFormulario(false);
@@ -60,7 +61,17 @@ export const Ingredientes = () => {
 
     useEffect(() => {
         getIngredientes();
-    });
+    }, []);
+
+    function handleBuscar() {
+        let url = "http://localhost:3001/api/ingredientes?";
+        if (nombreFiltro) {
+            url += `nombre=${nombreFiltro}&`;
+        }
+        axios.get(url).then(response => {
+            setIngredientes(response.data);
+        });
+    }
 
     return (
         <>
@@ -69,13 +80,29 @@ export const Ingredientes = () => {
                 <h1>Ingredientes</h1>
                 {!mostrarFormulario ? (
                     <>
-                        <button
-                            type="button"
-                            className="btn btn-success mb-3"
-                            onClick={() => setMostrarFormulario(true)}
-                        >
-                            Registrar nuevo ingrediente
-                        </button>
+                        <div className="d-flex align-items-center justify-content-between mb-3">
+                            <div className="d-flex align-items-center" style={{ gap: '10px' }}>
+                                <div className="form-floating" style={{ flex: '1' }}>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="floatingInput"
+                                        placeholder="Buscar Nombre de Categoria"
+                                        value={nombreFiltro}
+                                        onChange={(e) => setNombreFiltro(e.target.value)}
+                                    />
+                                    <label htmlFor="floatingInput">Buscar Nombre</label>
+                                </div>
+                                <button type="button" className="btn btn-primary" onClick={handleBuscar}>Buscar</button>
+                            </div>
+                            <button
+                                type="button"
+                                className="btn btn-success"
+                                onClick={() => setMostrarFormulario(true)}
+                            >
+                                Crear Nueva Categoria
+                            </button>
+                        </div>
                         <table className="table">
                             <thead>
                                 <tr>
