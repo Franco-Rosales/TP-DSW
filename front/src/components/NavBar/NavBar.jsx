@@ -22,7 +22,16 @@ export const NavBar = () => {
           <Nav.Link as={Link} to="/ingredientes" className='nav-link text-light'>Ingredientes</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} to="/recetas-ingredientes" className='nav-link text-light'>Receta Ingredientes</Nav.Link>
+        <Nav.Link as={Link} to="/recetas-ingredientes" className='nav-link text-light'>Receta Ingredientes</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} to="/comentarios" className='nav-link text-light'>Comentarios</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} to="/categorias" className='nav-link text-light'>Categorias</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} to="/contacto" className='nav-link text-light'>Contacto</Nav.Link>
         </Nav.Item>
       </Nav>
     </>

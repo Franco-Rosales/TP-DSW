@@ -5,9 +5,9 @@ const { Op } = require('sequelize');
 // Crear y guardar un nuevo comentario
 exports.create = (req, res) => {
     // Validar la petición
-    if (!req.body.contenido || !req.body.usuario_id || !req.body.receta_id) {
+    if (!req.body.contenido || !req.body.chef_id || !req.body.receta_id) {
         res.status(400).send({
-            message: "El contenido, usuario_id y receta_id no pueden estar vacíos!"
+            message: "El contenido, chef_id y receta_id no pueden estar vacíos!"
         });
         return;
     }
@@ -16,7 +16,7 @@ exports.create = (req, res) => {
     const comentario = {
         contenido: req.body.contenido,
         fecha_creacion: req.body.fecha_creacion || new Date(),
-        usuario_id: req.body.usuario_id,
+        chef_id: req.body.chef_id,
         receta_id: req.body.receta_id
     };
 

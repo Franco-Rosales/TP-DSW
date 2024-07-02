@@ -7,7 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 export const Chefs = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [ chefs, setChefs ] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+    
 
     const onSubmit = async (data) => {
         try {
@@ -24,7 +26,11 @@ export const Chefs = () => {
     
     const getChefs = async () => {
         try {
-            const response = await axios.get("http://localhost:3001/api/chefs");
+            let url = "http://localhost:3001/api/chefs";
+            if (searchTerm) {
+                url += `?nombre_like=${searchTerm}`; // Filtra por nombre si hay un término de búsqueda
+            }
+            const response = await axios.get(url);
             setChefs(response.data)
         } catch (error) {
             console.error('Error al traer los datos de los chefs:', error);
@@ -48,6 +54,17 @@ export const Chefs = () => {
         <NavBar/>
         <div className="container text-center">
             <h1>Chefs</h1>
+                <div className="d-flex justify-content-start mb-4">
+                        <input
+                            type="text"
+                            className="form-control me-2"
+                            placeholder="Buscar chefs"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{ maxWidth: '300px' }}
+                        />
+                        <button className="btn btn-primary" onClick={getChefs}>Buscar</button>
+                </div>
             <form onSubmit={handleSubmit(onSubmit)} className="col-6 mx-auto">
                 <div className="form-floating mb-3">
                     <input type="text" className="form-control" {...register('nombre', { required: true })}/>

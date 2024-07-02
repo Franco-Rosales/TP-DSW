@@ -8,6 +8,11 @@ import { Ingredientes } from './components/Ingredientes/Ingredientes';
 import { EditarIngrediente } from './components/Ingredientes/EditarIngrediente';
 import { RecetaIngrediente } from './components/RecetasIngredientes/RecetaIngrediente';
 import { EditarRecetaIngrediente } from './components/RecetasIngredientes/EditarRecetaIngrediente';
+import { Comentarios } from './components/Comentarios/Comentarios';
+import { EditarComentario } from './components/Comentarios/EditarComentario';
+import { Categorias } from './components/Categorias/Categorias';
+import { Contacto } from './components/Contacto/Contacto';
+
 
 function App() {
   return (
@@ -21,6 +26,10 @@ function App() {
         <Route path="/ingrediente/:id" element={<EditarIngrediente/>}/>
         <Route path="/recetas-ingredientes" element={<RecetaIngrediente/>}/>
         <Route path="/recetas-ingredientes/:id" element={<EditarRecetaIngrediente/>}/>
+        <Route path="/comentarios" element={<Comentarios/>}/>
+        <Route path="/comentarios/:id" element={<EditarComentario/>}/>
+        <Route path="/categorias" element={<Categorias/>}/>
+        <Route path='/contacto' element={<Contacto/>} />
       </Routes>
   );
 }
