@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { NavBar } from "../NavBar/NavBar";
+
 
 function Contacto() {
     const [contacto, setContacto] = useState([]);
@@ -86,7 +86,6 @@ function Contacto() {
 
     return (
         <>
-            <NavBar />
             <div className="container text-center">
                 <br />
                 <h1>Consultar Mensajes</h1>

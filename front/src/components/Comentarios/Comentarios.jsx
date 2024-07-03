@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { NavBar } from '../NavBar/NavBar';
 import { useForm } from 'react-hook-form';
 
 export const Comentarios = () => {
@@ -90,7 +89,6 @@ export const Comentarios = () => {
 
     return (
         <>
-            <NavBar />
             <div className="container text-center">
                 <br />
                 <h1>Comentarios</h1>

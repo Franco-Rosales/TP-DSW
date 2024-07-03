@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { NavBar } from '../NavBar/NavBar';
 import { useForm } from 'react-hook-form';
 
 
@@ -75,7 +74,6 @@ export const Ingredientes = () => {
 
     return (
         <>
-            <NavBar />
             <div className="container text-center">
                 <h1>Ingredientes</h1>
                 {!mostrarFormulario ? (

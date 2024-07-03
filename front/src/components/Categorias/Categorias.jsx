@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { NavBar } from "../NavBar/NavBar";
+
 
 function Categorias() {
     const [categorias, setCategorias] = useState([]);
@@ -71,7 +71,6 @@ function Categorias() {
 
     return (
         <>
-            <NavBar />
             <div className="container text-center">
                 <br />
                 <h1>Consultar Categorias</h1>

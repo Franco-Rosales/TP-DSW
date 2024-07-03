@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { NavBar } from '../NavBar/NavBar';
 import { useForm } from 'react-hook-form';
 import { useNavigate} from 'react-router-dom';
 
@@ -71,7 +70,6 @@ export const Chefs = () => {
 
     return (
         <>
-            <NavBar />
             <div className="container text-center">
                 <br />
                 <h1>Chefs</h1>
