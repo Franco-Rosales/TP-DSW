@@ -15,6 +15,7 @@ const recetasCategoriasRoutes = require('./app/routes/recetasCategoriasRoutes');
 const recetasRoutes = require('./app/routes/recetasRoutes');
 const chefsRoutes = require('./app/routes/chefsRoutes');
 const recetaIngredientesRoute = require('./app/routes/recetasIngredientesRoutes');
+const noticiasRoutes = require('./app/routes/noticiasRoutes');
 
 // Inicializar la aplicación Express
 const app = express();
@@ -31,6 +32,7 @@ db.iniciar();
 
 // Rutas
 
+app.use('/api/noticias', noticiasRoutes); 
 app.use('/api/valoraciones', valoracionesRoutes);
 app.use('/api/categorias', categoriasRoutes);
 app.use('/api/comentarios', comentariosRoutes);
