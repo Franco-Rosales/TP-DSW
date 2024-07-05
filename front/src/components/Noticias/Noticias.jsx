@@ -1,46 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import {useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate, Link } from 'react-router-dom';
 
 const Noticias = () => {
-    const { id } = useParams();
     const navigate = useNavigate();
-    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const [noticias, setNoticias] = useState([]);
-    const [filtroTitulo, setFiltroTitulo] = useState('');
     const [chefs, setChefs] = useState([]);
-    const [isEditing, setIsEditing] = useState(false);
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
-
-    useEffect(() => {
-        getNoticias();
-        getChefs();
-        if (id) {
-            getNoticia(id);
-            setIsEditing(true);
-        }
-    }, [id]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const getNoticias = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/api/noticias');
+            let url = "http://localhost:3001/api/noticias";
+            if (searchTerm) {
+                url += `?titulo_like=${searchTerm}`; 
+            }
+            const response = await axios.get(url);
             setNoticias(response.data);
+            console.log(noticias);
         } catch (error) {
-            console.error('Error al obtener noticias:', error);
-        }
-    };
-
-    const getNoticia = async (id) => {
-        try {
-            const response = await axios.get(`http://localhost:3001/api/noticias/${id}`);
-            const noticia = response.data;
-            setValue('titulo', noticia.titulo);
-            setValue('descripcion', noticia.descripcion);
-            setValue('fecha', noticia.fecha);
-            setValue('chef_id', noticia.chef_id);
-        } catch (error) {
-            console.error('Error al obtener noticia:', error);
+            console.error('Error al traer los datos de las noticias:', error);
         }
     };
 
@@ -53,44 +32,33 @@ const Noticias = () => {
         }
     };
 
-    const onSubmit = async (data) => {
-        try {
-            if (isEditing) {
-                await axios.put(`http://localhost:3001/api/noticias/${id}`, data);
-            } else {
-                await axios.post('http://localhost:3001/api/noticias', data);
-            }
-            getNoticias();
-            reset();
-            setMostrarFormulario(false);
-            navigate('/noticias');
-        } catch (error) {
-            console.error('Error al registrar la noticia:', error);
-        }
-    };
-
     const onDelete = async (id) => {
-        try {
+        if (window.confirm("¿Desea borrar esta noticia?")) {
             await axios.delete(`http://localhost:3001/api/noticias/${id}`);
             getNoticias();
-        } catch (error) {
-            console.error('Error al eliminar la noticia:', error);
         }
     };
 
-    const handleFiltroTituloChange = (e) => {
-        setFiltroTitulo(e.target.value);
+    const getChefName = (chefId) => {
+        const chef = chefs.find(c => c.id === chefId);
+        return chef ? chef.nombre : 'Desconocido';
     };
 
-    const filteredNoticias = noticias.filter(noticia =>
-        noticia.titulo.toLowerCase().includes(filtroTitulo.toLowerCase())
-    );
+    const mostrarFormulario = () => {
+        navigate('/noticias/0');
+    };
+
+    useEffect(() => {
+        getNoticias();
+        getChefs();
+    }, []);
 
     return (
         <>
             <div className="container text-center">
+                <br />
                 <h1>Noticias</h1>
-                {!mostrarFormulario ? (
+                <br />
                     <>
                         <div className="d-flex align-items-center justify-content-between mb-3">
                             <div className="d-flex align-items-center" style={{ gap: '10px' }}>
@@ -99,19 +67,20 @@ const Noticias = () => {
                                         type="text"
                                         className="form-control"
                                         id="floatingInput"
-                                        placeholder="Filtrar por título"
-                                        value={filtroTitulo}
-                                        onChange={handleFiltroTituloChange}
+                                        placeholder="Buscar por título"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
                                     />
-                                    <label htmlFor="floatingInput">Filtrar por título</label>
+                                    <label htmlFor="floatingInput">Buscar por título</label>
                                 </div>
+                                <button type="button" className="btn btn-primary" onClick={getNoticias}>Buscar</button>
                             </div>
                             <button
                                 type="button"
                                 className="btn btn-success"
-                                onClick={() => setMostrarFormulario(true)}
+                                onClick={() => mostrarFormulario()}
                             >
-                                Crear Nueva Noticia
+                                Registrar nueva noticia
                             </button>
                         </div>
                         <table className="table">
@@ -120,22 +89,24 @@ const Noticias = () => {
                                     <th scope="col">Título</th>
                                     <th scope="col">Descripción</th>
                                     <th scope="col">Fecha</th>
+                                    <th scope="col">Chef</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredNoticias.map(noticia => (
+                                {noticias.map(noticia => (
                                     <tr key={noticia.id}>
                                         <td>{noticia.titulo}</td>
                                         <td>{noticia.descripcion}</td>
-                                        <td>{new Date(noticia.fecha).toLocaleDateString()}</td>
+                                        <td>{noticia.fecha}</td>
+                                        <td>{getChefName(noticia.chef_id)}</td>
                                         <td>
-                                            <button className="btn btn-warning me-2" onClick={() => {
-                                                setMostrarFormulario(true);
-                                                navigate(`/noticias/${noticia.id}`);
-                                            }}>
-                                                Editar
-                                            </button>
+                                            <Link to={`/noticias/${noticia.id}`}>
+                                                <button 
+                                                className="btn btn-warning me-2" >
+                                                    Editar
+                                                </button>
+                                            </Link>
                                             <button className="btn btn-danger" onClick={() => onDelete(noticia.id)}>
                                                 Eliminar
                                             </button>
@@ -145,63 +116,6 @@ const Noticias = () => {
                             </tbody>
                         </table>
                     </>
-                ) : (
-                    <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column align-items-center">
-                        <div className="form-floating mb-3" style={{ width: '50%' }}>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="titulo"
-                                placeholder="Título"
-                                {...register('titulo', { required: 'El título es requerido' })}
-                            />
-                            <label htmlFor="titulo">Título</label>
-                            {errors.titulo && <span className='text-danger'>{errors.titulo.message}</span>}
-                        </div>
-                        <div className="form-floating mb-3" style={{ width: '50%' }}>
-                            <textarea
-                                className="form-control"
-                                id="descripcion"
-                                placeholder="Descripción"
-                                {...register('descripcion', { required: 'La descripción es requerida' })}
-                            />
-                            <label htmlFor="descripcion">Descripción</label>
-                            {errors.descripcion && <span className='text-danger'>{errors.descripcion.message}</span>}
-                        </div>
-                        <div className="form-floating mb-3" style={{ width: '50%' }}>
-                            <input
-                                type="date"
-                                className="form-control"
-                                id="fecha"
-                                placeholder="Fecha"
-                                {...register('fecha', { required: 'La fecha es requerida' })}
-                            />
-                            <label htmlFor="fecha">Fecha</label>
-                            {errors.fecha && <span className='text-danger'>{errors.fecha.message}</span>}
-                        </div>
-                        <div className="form-floating mb-3" style={{ width: '50%' }}>
-                            <select className="form-control" {...register('chef_id', { required: true })}>
-                                <option value="">Selecciona un chef</option>
-                                {chefs.map(chef => (
-                                    <option key={chef.id} value={chef.id}>{chef.nombre}</option>
-                                ))}
-                            </select>
-                            <label htmlFor="chef_id">Chef</label>
-                        </div>
-                        <div className="d-flex justify-content-between" style={{ width: '50%' }}>
-                            <button type="submit" className="btn btn-primary">
-                                {isEditing ? 'Actualizar' : 'Registrar'}
-                            </button>
-                            <button type="button" className="btn btn-secondary" onClick={() => {
-                                setMostrarFormulario(false);
-                                reset();
-                                if (isEditing) navigate('/noticias');
-                            }}>
-                                Volver
-                            </button>
-                        </div>
-                    </form>
-                )}
             </div>
         </>
     );

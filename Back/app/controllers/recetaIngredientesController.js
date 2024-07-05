@@ -1,5 +1,5 @@
 const db = require('../db/setup');
-const RecetaIngredientes = db.recetaIngredientes;  
+const RecetaIngredientes = db.recetasIngredientes;  
 
 exports.create = async (req, res) => {
     if (!req.body.receta_id || !req.body.ingrediente_id || !req.body.cantidad || !req.body.unidad) {
@@ -48,12 +48,12 @@ exports.findOne = async (req, res) => {
             res.send(data);
         } else {
             res.status(404).send({
-                message: `No se encontró la asociación receta-ingrediente con receta_id=${receta_id} e ingrediente_id=${ingrediente_id}.`
+                message: `No se encontró la asociación receta-ingrediente.`
             });
         }
     } catch (err) {
         res.status(500).send({
-            message: `Ocurrió un error al recuperar la asociación receta-ingrediente con receta_id=${receta_id} e ingrediente_id=${ingrediente_id}.`
+            message: `Ocurrió un error al recuperar la asociación receta-ingrediente.`
         });
     }
 };

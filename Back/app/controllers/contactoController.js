@@ -19,7 +19,7 @@ exports.create = (req, res) => {
         email: req.body.email,
         telefono: req.body.telefono,
         mensaje: req.body.mensaje,
-        feccha_agregado: req.body.fecha_agregado
+        fecha_agregado: req.body.fecha_agregado
     };
 
     Contacto.create(contacto)
@@ -96,23 +96,23 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Medidas.destroy({
+    Contacto.destroy({
         where: { id: id }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "La Medida se eliminó exitosamente!"
+                    message: "El contacto se eliminó exitosamente!"
                 });
             } else {
                 res.send({
-                    message: `No se pudo borrar la Medida con id=${id}.`
+                    message: `No se pudo borrar el contacto con id=${id}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "No se pudo borrar la Medida con id=" + id
+                message: "No se pudo borrar el contacto con id=" + id
             });
         });
 };

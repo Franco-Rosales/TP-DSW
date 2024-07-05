@@ -11,6 +11,14 @@ import { Contacto } from './components/Contacto/Contacto';
 import { Footer } from './components/Footer/Footer';
 import './App.css';
 import { NavBar } from './components/NavBar/NavBar';
+import { Receta } from './components/Recetas/Receta';
+import { Chef } from './components/Chefs/Chef';
+import { Ingrediente } from './components/Ingredientes/Ingrediente';
+import { RecetasIngredientes } from './components/RecetasIngredientes/RecetasIngredientes';
+import { Noticia } from './components/Noticias/Noticia';
+import { Comentario } from './components/Comentarios/Comentario';
+import { Categoria } from './components/Categorias/Categoria';
+import { Contactos } from './components/Contacto/Contactos';
 
 
 function App() {
@@ -21,13 +29,21 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/recetas" element={<Recetas />} />
+        <Route path="/receta/:id" element={<Receta />} />
         <Route path="/chefs" element={<Chefs/>}/>
+        <Route path="/chef/:id" element={<Chef/>}/>
         <Route path="/ingredientes" element={<Ingredientes/>}/>
-        <Route path="/recetas-ingredientes" element={<RecetaIngrediente/>}/>
+        <Route path="/ingrediente/:id" element={<Ingrediente/>}/>
+        <Route path="/recetas-ingredientes" element={<RecetasIngredientes/>}/>
+        <Route path="/recetas-ingredientes/:id" element={<RecetaIngrediente/>}/>
         <Route path="/noticias" element={<Noticias/>}/>
+        <Route path="/noticias/:id" element={<Noticia/>}/>
         <Route path="/comentarios" element={<Comentarios/>}/>
+        <Route path="/comentarios/:id" element={<Comentario/>}/>
         <Route path="/categorias" element={<Categorias/>}/>
-        <Route path='/contacto' element={<Contacto/>} />
+        <Route path="/categorias/:id" element={<Categoria/>}/>
+        <Route path='/contacto' element={<Contactos/>} />
+        <Route path='/contacto/:id' element={<Contacto/>} />
       </Routes>
     </div>
     <Footer/>

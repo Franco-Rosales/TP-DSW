@@ -1,6 +1,6 @@
 const db = require('../db/setup');
 const Noticias = db.noticias;
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 exports.create = (req, res) => {
     // Validación básica de campos requeridos
@@ -30,7 +30,10 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Noticias.findAll()
+    const { titulo_like } = req.query;
+    let condition = titulo_like ? { titulo: { [Op.like]: `%${titulo_like}%` } } : null;
+
+    Noticias.findAll({ where: condition })
         .then(data => {
             res.send(data);
         })

@@ -17,7 +17,7 @@ const NoticiasModel = (sequelize) => {
                 type: DataTypes.TEXT
             },
             fecha: {
-                type: DataTypes.DATE
+                type: DataTypes.DATEONLY
             },
             // Relacionamos la noticia con el chef
             chef_id: {

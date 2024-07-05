@@ -14,6 +14,22 @@ const ComentarioModel = (sequelize) => {
             },
             fecha_creacion: {
                 type: DataTypes.DATEONLY
+            },
+            receta_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'recetas',
+                    key: 'id'
+                }
+            },
+            chef_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'chefs',
+                    key: 'id'
+                }
             }
         },
         {
@@ -22,11 +38,9 @@ const ComentarioModel = (sequelize) => {
         }
     );
 
-    // Definición de relaciones
     Comentario.associate = (models) => {
-
-        // Relación muchos a uno con Receta
         Comentario.belongsTo(models.Receta, { foreignKey: 'receta_id' });
+        Comentario.belongsTo(models.Chef, { foreignKey: 'chef_id' });
     };
 
     return Comentario;

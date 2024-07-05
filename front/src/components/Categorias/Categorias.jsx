@@ -1,14 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { useNavigate, Link } from "react-router-dom";
 
 function Categorias() {
     const [categorias, setCategorias] = useState([]);
     const [nombreFiltro, setNombreFiltro] = useState('');
-    const [nombreCategoria, setNombreCategoria] = useState('');
-    const [descripcionCategoria, setDescripcionCategoria] = useState('');
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
-    const [editarCategoriaId, setEditarCategoriaId] = useState(null);
+    const navigate = useNavigate();
 
     async function getCategories() {
         try {
@@ -17,16 +14,18 @@ function Categorias() {
         } catch (error) {
             console.error('Error al traer los datos de las categorias:', error);
         }
-    }
+    };
 
-    useEffect(() => {
-        getCategories();
-    }, []);
+    function mostrarFormulario() {
+        navigate('/categorias/0')
+    };
 
     async function eliminarCategoria(id) {
-        await axios.delete(`http://localhost:3001/api/categorias/${id}`);
-        getCategories();
-    }
+        if (window.confirm("¿Desea borrar esta categoria?")) {
+            await axios.delete(`http://localhost:3001/api/categorias/${id}`);
+            getCategories();
+        }
+    };
 
     function handleBuscar() {
         let url = "http://localhost:3001/api/categorias?";
@@ -36,46 +35,18 @@ function Categorias() {
         axios.get(url).then(response => {
             setCategorias(response.data);
         });
-    }
+    };
 
-    async function handleRegistrarCategoria(e) {
-        e.preventDefault();
-        try {
-            if (editarCategoriaId) {
-                await axios.put(`http://localhost:3001/api/categorias/${editarCategoriaId}`, {
-                    nombre: nombreCategoria,
-                    descripcion: descripcionCategoria
-                });
-            } else {
-                await axios.post("http://localhost:3001/api/categorias", {
-                    nombre: nombreCategoria,
-                    descripcion: descripcionCategoria
-                });
-            }
-            setNombreCategoria('');
-            setDescripcionCategoria('');
-            setMostrarFormulario(false);
-            setEditarCategoriaId(null);
-            getCategories();
-        } catch (error) {
-            console.error('Error al registrar la categoria:', error);
-        }
-    }
-
-    function handleEditarCategoria(categoria) {
-        setNombreCategoria(categoria.nombre);
-        setDescripcionCategoria(categoria.descripcion);
-        setEditarCategoriaId(categoria.id);
-        setMostrarFormulario(true);
-    }
+    useEffect(() => {
+        getCategories();
+    }, []);
 
     return (
         <>
             <div className="container text-center">
                 <br />
-                <h1>Consultar Categorias</h1>
+                <h1>Categorias</h1>
                 <br />
-                {!mostrarFormulario ? (
                     <>
                         <div className="d-flex align-items-center justify-content-between mb-3">
                             <div className="d-flex align-items-center" style={{ gap: '10px' }}>
@@ -84,18 +55,18 @@ function Categorias() {
                                         type="text"
                                         className="form-control"
                                         id="floatingInput"
-                                        placeholder="Buscar Nombre de Categoria"
+                                        placeholder="Buscar por nombre"
                                         value={nombreFiltro}
                                         onChange={(e) => setNombreFiltro(e.target.value)}
                                     />
-                                    <label htmlFor="floatingInput">Buscar Nombre</label>
+                                    <label htmlFor="floatingInput">Buscar por nombre</label>
                                 </div>
                                 <button type="button" className="btn btn-primary" onClick={handleBuscar}>Buscar</button>
                             </div>
                             <button
                                 type="button"
                                 className="btn btn-success"
-                                onClick={() => setMostrarFormulario(true)}
+                                onClick={() => mostrarFormulario()}
                             >
                                 Crear Nueva Categoria
                             </button>
@@ -118,13 +89,14 @@ function Categorias() {
                                         <td>{categoria.descripcion}</td>
                                         <td>{categoria.fecha_agregado}</td>
                                         <td>
-                                            <button
-                                                type="button"
-                                                className="btn btn-warning me-2"
-                                                onClick={() => handleEditarCategoria(categoria)}
-                                            >
-                                                Editar
-                                            </button>
+                                            <Link to={`/categorias/${categoria.id}`}>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-warning me-2"
+                                                >
+                                                    Editar
+                                                </button>
+                                            </Link>
                                             <button
                                                 type="button"
                                                 className="btn btn-danger"
@@ -138,45 +110,6 @@ function Categorias() {
                             </tbody>
                         </table>
                     </>
-                ) : (
-                    <form onSubmit={handleRegistrarCategoria} className="d-flex flex-column align-items-center">
-                        <div className="form-floating mb-3" style={{ width: '50%' }}>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="nombreCategoria"
-                                placeholder="Nombre de la Categoria"
-                                value={nombreCategoria}
-                                onChange={(e) => setNombreCategoria(e.target.value)}
-                                required
-                            />
-                            <label htmlFor="nombreCategoria">Nombre de la Categoria</label>
-                        </div>
-                        <div className="form-floating mb-3" style={{ width: '50%' }}>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="descripcionCategoria"
-                                placeholder="Descripcion de la Categoria"
-                                value={descripcionCategoria}
-                                onChange={(e) => setDescripcionCategoria(e.target.value)}
-                                required
-                            />
-                            <label htmlFor="descripcionCategoria">Descripcion de la Categoria</label>
-                        </div>
-                        <div className="d-flex justify-content-between" style={{ width: '50%' }}>
-                            <button type="submit" className="btn btn-primary">
-                                {editarCategoriaId ? 'Confirmar Actualización' : 'Registrar Categoria'}
-                            </button>
-                            <button type="button" className="btn btn-secondary" onClick={() => {
-                                setMostrarFormulario(false);
-                                setEditarCategoriaId(null);
-                            }}>
-                                Volver
-                            </button>
-                        </div>
-                    </form>
-                )}
             </div>
         </>
     );

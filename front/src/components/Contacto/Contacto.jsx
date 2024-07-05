@@ -1,175 +1,63 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Contacto() {
-    const [contacto, setContacto] = useState([]);
-    const [nombreFiltro, setNombreFiltro] = useState('');
-    const [nombreContacto, setNombreContacto] = useState('');
-    const [apellidoContacto, setApellidoContacto] = useState('');
-    const [emailContacto, setEmailContacto] = useState('');
-    const [telefonoContacto, setTelefonoContacto] = useState('');
-    const [mensajeContacto, setMensajeContacto] = useState('');
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
-    const [editarContactoId, setEditarContactoId] = useState(null);
 
-    async function getContactos() {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [contacto, setContacto] = useState({});
+    const {id} = useParams();
+    const navigate = useNavigate();
+
+    const volver = () => {
+        navigate('/contacto');
+    };
+
+    const getContacto = async (id) => {
         try {
-            const response = await axios.get("http://localhost:3001/api/contacto");
-            setContacto(response.data);
+            const contactoDatos = await axios.get(`http://localhost:3001/api/contacto/${id}`);
+            setContacto(contactoDatos.data);
         } catch (error) {
-            console.error('Error al traer los datos de los contactos:', error);
+            console.error('Error al traer los datos del contacto:', error);
         }
-    }
+    };
+
+    const onSubmit = async (data) => {
+        try {
+            if (id > 0) {
+                await axios.put(`http://localhost:3001/api/contacto/${id}`, data);
+            } else {
+                await axios.post("http://localhost:3001/api/contacto", data);
+            }
+            volver();
+        } catch (error) {
+            console.error('Error registrando al contacto:', error);
+        }
+    };
 
     useEffect(() => {
-        getContactos();
+        getContacto(id);
     }, []);
-
-    async function eliminarContacto(id) {
-        await axios.delete(`http://localhost:3001/api/contacto/${id}`);
-        getContactos();
-    }
-
-    function handleBuscar() {
-        let url = "http://localhost:3001/api/contacto?";
-        if (nombreFiltro) {
-            url += `nombre=${nombreFiltro}&`;
-        }
-        axios.get(url).then(response => {
-            setContacto(response.data);
-        });
-    }
-
-    async function handleRegistrarContacto(e) {
-        e.preventDefault();
-        try {
-            if (editarContactoId) {
-                await axios.put(`http://localhost:3001/api/contacto/${editarContactoId}`, {
-                    nombre: nombreContacto,
-                    apellido: apellidoContacto,
-                    email: emailContacto,
-                    telefono: telefonoContacto,
-                    mensaje: mensajeContacto
-                });
-            } else {
-                await axios.post("http://localhost:3001/api/contacto", {
-                    nombre: nombreContacto,
-                    apellido: apellidoContacto,
-                    email: emailContacto,
-                    telefono: telefonoContacto,
-                    mensaje: mensajeContacto
-                });
-            }
-            setNombreContacto('');
-            setApellidoContacto('');
-            setEmailContacto('');
-            setTelefonoContacto('');
-            setMensajeContacto('');
-            setMostrarFormulario(false);
-            setEditarContactoId(null);
-            getContactos();
-        } catch (error) {
-            console.error('Error al registrar el mensaje:', error);
-        }
-    }
-
-    function handleEditarContacto(contacto) {
-        setNombreContacto(contacto.nombre);
-        setApellidoContacto(contacto.apellido);
-        setEmailContacto(contacto.email);
-        setTelefonoContacto(contacto.telefono);
-        setMensajeContacto(contacto.mensaje);
-        setEditarContactoId(contacto.id);
-        setMostrarFormulario(true);
-    }
 
     return (
         <>
             <div className="container text-center">
                 <br />
-                <h1>Consultar Mensajes</h1>
+                <h1>Contactos</h1>
                 <br />
-                {!mostrarFormulario ? (
-                    <>
-                        <div className="d-flex align-items-center justify-content-between mb-3">
-                            <div className="d-flex align-items-center" style={{ gap: '10px' }}>
-                                <div className="form-floating" style={{ flex: '1' }}>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="floatingInput"
-                                        placeholder="Buscar Nombre de Mensaje"
-                                        value={nombreFiltro}
-                                        onChange={(e) => setNombreFiltro(e.target.value)}
-                                    />
-                                    <label htmlFor="floatingInput">Buscar Nombre Usuario</label>
-                                </div>
-                                <button type="button" className="btn btn-primary" onClick={handleBuscar}>Buscar</button>
-                            </div>
-                            <button
-                                type="button"
-                                className="btn btn-success"
-                                onClick={() => setMostrarFormulario(true)}
-                            >
-                                Enviar nuevo mensaje
-                            </button>
-                        </div>
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Apellido</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Telefono</th>
-                                    <th scope="col">Mensaje</th>
-                                    <th scope="col">Fecha de Agregado</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {contacto.map((contacto) => (
-                                    <tr key={contacto.id}>
-                                        <td>{contacto.nombre}</td>
-                                        <td>{contacto.apellido}</td>
-                                        <td>{contacto.email}</td>
-                                        <td>{contacto.telefono}</td>
-                                        <td>{contacto.mensaje}</td>
-                                        <td>{contacto.fecha_agregado}</td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                className="btn btn-warning me-2"
-                                                onClick={() => handleEditarContacto(contacto)}
-                                            >
-                                                Editar
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="btn btn-danger"
-                                                onClick={() => eliminarContacto(contacto.id)}
-                                            >
-                                                Eliminar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </>
-                ) : (
-                    <form onSubmit={handleRegistrarContacto} className="d-flex flex-column align-items-center">
+                    <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column align-items-center">
                         <div className="form-floating mb-3" style={{ width: '50%' }}>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="nombreContacto"
                                 placeholder="Nombre"
-                                value={nombreContacto}
-                                onChange={(e) => setNombreContacto(e.target.value)}
-                                required
+                                defaultValue={contacto.nombre}
+                                {...register('nombre', { required: 'El nombre es requerido' })}
                             />
                             <label htmlFor="nombreContacto">Nombre</label>
+                            {errors.nombre && <span className='text-danger'>{errors.nombre.message}</span>}
                         </div>
                         <div className="form-floating mb-3" style={{ width: '50%' }}>
                             <input
@@ -177,11 +65,11 @@ function Contacto() {
                                 className="form-control"
                                 id="apellidoContacto"
                                 placeholder="Apellido"
-                                value={apellidoContacto}
-                                onChange={(e) => setApellidoContacto(e.target.value)}
-                                required
+                                defaultValue={contacto.apellido}
+                                {...register('apellido', { required: 'El apellido es requerido' })}
                             />
                             <label htmlFor="apellidoContacto">Apellido</label>
+                            {errors.apellido && <span className='text-danger'>{errors.apellido.message}</span>}
                         </div>
                         <div className="form-floating mb-3" style={{ width: '50%' }}>
                             <input
@@ -189,11 +77,11 @@ function Contacto() {
                                 className="form-control"
                                 id="emailContacto"
                                 placeholder="Email"
-                                value={emailContacto}
-                                onChange={(e) => setEmailContacto(e.target.value)}
-                                required
+                                defaultValue={contacto.email}
+                                {...register('email', { required: 'El email es requerido' })}
                             />
                             <label htmlFor="emailContacto">Email</label>
+                            {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                         </div>
                         <div className="form-floating mb-3" style={{ width: '50%' }}>
                             <input
@@ -201,36 +89,32 @@ function Contacto() {
                                 className="form-control"
                                 id="telefonoContacto"
                                 placeholder="Telefono"
-                                value={telefonoContacto}
-                                onChange={(e) => setTelefonoContacto(e.target.value)}
-                                required
+                                defaultValue={contacto.telefono}
+                                {...register('telefono', { required: 'El telefono es requerido' })}
                             />
                             <label htmlFor="telefonoContacto">Telefono</label>
+                            {errors.telefono && <span className='text-danger'>{errors.telefono.message}</span>}
                         </div>
                         <div className="form-floating mb-3" style={{ width: '50%' }}>
                             <textarea
                                 className="form-control"
                                 id="mensajeContacto"
                                 placeholder="Mensaje"
-                                value={mensajeContacto}
-                                onChange={(e) => setMensajeContacto(e.target.value)}
-                                required
+                                defaultValue={contacto.mensaje}
+                                {...register('mensaje', { required: 'El mensaje es requerido' })}
                             />
                             <label htmlFor="mensajeContacto">Mensaje</label>
+                            {errors.mensaje && <span className='text-danger'>{errors.mensaje.message}</span>}
                         </div>
-                        <div className="d-flex justify-content-between" style={{ width: '50%' }}>
+                        <div className="d-flex justify-content-between mt-2 mb-3" style={{ width: '50%' }}>
                             <button type="submit" className="btn btn-primary">
-                                {editarContactoId ? 'Confirmar Actualización' : 'Registrar Mensaje'}
+                                {id > 0 ? 'Confirmar Actualización' : 'Registrar Mensaje'}
                             </button>
-                            <button type="button" className="btn btn-secondary" onClick={() => {
-                                setMostrarFormulario(false);
-                                setEditarContactoId(null);
-                            }}>
+                            <button type="button" className="btn btn-secondary" onClick={volver}>
                                 Volver
                             </button>
                         </div>
                     </form>
-                )}
             </div>
         </>
     );
