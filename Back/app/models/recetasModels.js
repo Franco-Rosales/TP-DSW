@@ -30,6 +30,13 @@ const RecetaModel = (sequelize) => {
                     model: 'chefs', 
                     key: 'id'
                 }
+            },
+            categoria_id: { 
+                type: DataTypes.INTEGER,
+                references: {
+                    model: 'categorias', 
+                    key: 'id'
+                }
             }
         },
         {
@@ -46,22 +53,18 @@ const RecetaModel = (sequelize) => {
             foreignKey: 'receta_id'
         });
 
-        // Relación uno a muchos con Ingredientes
         Receta.belongsToMany(models.Ingrediente, {
             through: models.RecetaIngrediente,
             foreignKey: 'receta_id'
         });
 
-        // Relación uno a muchos con Pasos de Preparación
-        Receta.hasMany(models.PasoPreparacion, { foreignKey: 'receta_id' });
-
-        // Relación uno a muchos con Comentarios
         Receta.hasMany(models.Comentario, { foreignKey: 'receta_id' });
 
-        // Relación uno a muchos con Valoraciones
         Receta.hasMany(models.Valoracion, { foreignKey: 'receta_id' });
 
         Receta.belongsTo(models.Chef, { foreignKey: 'chef_id' });
+
+        Receta.belongsTo(models.Categoria, { foreignKey: 'categoria_id' });
     };
 
     return Receta;

@@ -8,6 +8,7 @@ export const Receta = ({cancelar}) => {
     const {id} = useParams();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [chefs, setChefs] = useState([]);
+    const [categorias, setCategorias] = useState([]);
     const [receta, setReceta] = useState({});
     const navigate = useNavigate();
 
@@ -21,6 +22,15 @@ export const Receta = ({cancelar}) => {
             setChefs(response.data);
         } catch (error) {
             console.error('Error al traer los datos de los chefs:', error);
+        }
+    };
+
+    const getCategorias = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/api/categorias");
+            setCategorias(response.data);
+        } catch (error) {
+            console.error('Error al traer los datos de las categorias:', error);
         }
     };
 
@@ -53,10 +63,12 @@ export const Receta = ({cancelar}) => {
         setValue('instrucciones', receta.instrucciones);
         setValue('tiempo_preparacion', receta.tiempo_preparacion);
         setValue('chef_id', receta.chef_id);
+        setValue('categoria_id', receta.categoria_id);
     };
 
     useEffect(() => {
         getChefs();
+        getCategorias();
         getReceta(id);
     }, []);
 
@@ -120,7 +132,14 @@ export const Receta = ({cancelar}) => {
                     {chefs && chefs.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
                 </select>
                 <label htmlFor="chef_id">Chef</label>
-                </div>
+            </div>
+            <div className="form-floating mb-3" style={{ width: '50%' }}>
+                <select className="form-select"  defaultValue={receta.categoria_id} {...register('categoria_id')}>
+                    <option value="0">Seleccionar categoria</option>
+                    {categorias && categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
+                </select>
+                <label htmlFor="categoria_id">Categoria</label>
+            </div>
                     <div className="d-flex justify-content-between mt-2 mb-3" style={{ width: '50%' }}>
                         <button type="submit" className="btn btn-primary">
                             {id > 0 ? 'Confirmar Actualización' : 'Registrar Receta'}

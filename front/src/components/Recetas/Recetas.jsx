@@ -8,6 +8,7 @@ const Recetas = () => {
     const [chefs, setChefs] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+    const [categorias, setCategorias] = useState([]);
 
     const getRecetas = async () => {
         try {
@@ -24,6 +25,15 @@ const Recetas = () => {
             setChefs(response.data);
         } catch (error) {
             console.error('Error al traer los datos de los chefs:', error);
+        }
+    };
+
+    const getCategorias = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/api/categorias");
+            setCategorias(response.data);
+        } catch (error) {
+            console.error('Error al traer los datos de las categorias:', error);
         }
     };
 
@@ -52,9 +62,15 @@ const Recetas = () => {
         return chef ? chef.nombre : 'Desconocido';
     };
 
+    const getCategoriaName = (categoriaId) => {
+        const categoria = categorias.find(c => c.id === categoriaId);
+        return categoria ? categoria.nombre : 'Desconocido';
+    };
+
     useEffect(() => {
         getRecetas();
         getChefs();
+        getCategorias();
     }, []);
 
     return (
@@ -96,6 +112,7 @@ const Recetas = () => {
                                 <th scope="col">Tiempo De Preparacion</th>
                                 <th scope="col">Fecha De Creacion</th>
                                 <th scope="col">Chef</th>
+                                <th scope="col">Categoria</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -108,6 +125,7 @@ const Recetas = () => {
                                     <td>{r.tiempo_preparacion}</td>
                                     <td>{r.fecha_creacion}</td>
                                     <td>{getChefName(r.chef_id)}</td>
+                                    <td>{getCategoriaName(r.categoria_id)}</td>
                                     <td>
                                         <Link to={`/receta/${r.id}`}>
                                         <button
