@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 export const RecetaIngrediente = () => {
     const {id} = useParams();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const [recetas, setRecetas] = useState([]);
     const [ingredientes, setIngredientes] = useState([]);
@@ -37,6 +37,7 @@ export const RecetaIngrediente = () => {
         try {
             const recetaIngredienteDatos = await axios.get(`http://localhost:3001/api/recetas-ingredientes/${id}`);
             setRecetaIngrediente(recetaIngredienteDatos.data);
+            setFormValues(recetaIngredienteDatos.data);
         } catch (error) {
             console.error('Error fetching receta ingrediente:', error);
         }
@@ -53,6 +54,13 @@ export const RecetaIngrediente = () => {
         } catch (error) {
             console.error('Error submitting receta ingrediente:', error);
         }
+    };
+
+    const setFormValues = (recetaIngrediente) => {
+        setValue('receta_id', recetaIngrediente.receta_id);
+        setValue('ingrediente_id', recetaIngrediente.ingrediente_id);
+        setValue('cantidad', recetaIngrediente.cantidad);
+        setValue('unidad', recetaIngrediente.unidad);
     };
 
     useEffect(() => {
@@ -75,6 +83,7 @@ export const RecetaIngrediente = () => {
                                     <option key={r.id} value={r.id}>{r.nombre}</option>
                                 ))}
                             </select>
+                            <label htmlFor="receta_id">Receta</label>
                             {errors.receta_id && <span className='text-danger'>{errors.receta_id.message}</span>}
                         </div>
                         <div className="form-floating mb-3" style={{ width: '50%' }}>
@@ -84,6 +93,7 @@ export const RecetaIngrediente = () => {
                                     <option key={i.id} value={i.id}>{i.nombre}</option>
                                 ))}
                             </select>
+                            <label htmlFor="ingrediente_id">Ingrediente</label>
                             {errors.ingrediente_id && <span className='text-danger'>{errors.ingrediente_id.message}</span>}
                         </div>
                         <div className="form-floating mb-3" style={{ width: '50%' }}>

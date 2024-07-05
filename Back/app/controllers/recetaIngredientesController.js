@@ -1,5 +1,7 @@
 const db = require('../db/setup');
 const RecetaIngredientes = db.recetasIngredientes;  
+const Ingrediente = db.ingredientes;
+const { Op } = require('sequelize');
 
 exports.create = async (req, res) => {
     if (!req.body.receta_id || !req.body.ingrediente_id || !req.body.cantidad || !req.body.unidad) {
@@ -26,11 +28,41 @@ exports.create = async (req, res) => {
     }
 };
 
-exports.findAll = async (req, res) => {
+{/*exports.findAll = async (req, res) => {
     const nombre = req.query.nombre;
     var condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
     try {
         const data = await RecetaIngredientes.findAll({ where: condition });
+        res.send(data);
+    } catch (err) {
+        res.status(500).send({
+            message: err.message || "Ocurrió un error al recuperar las asociaciones receta-ingrediente."
+        });
+    }
+};*/}
+
+exports.findAll = async (req, res) => {
+    const nombre = req.query.nombre;
+    let condition = null;
+    if (nombre) {
+        condition = {
+            '$Ingrediente.nombre$': {
+                [Op.like]: `%${nombre}%`
+            }
+        };
+    }
+
+    try {
+        const data = await RecetaIngredientes.findAll({
+            where: condition,
+            include: [
+                {
+                    model: Ingrediente,
+                    as: 'Ingrediente',
+                    attributes: ['nombre']
+                }
+            ]
+        });
         res.send(data);
     } catch (err) {
         res.status(500).send({

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export const Comentario = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const {id} = useParams();
     const navigate = useNavigate();
     const [comentario, setComentario] = useState({});
@@ -20,6 +20,7 @@ export const Comentario = () => {
         try {
             const comentarioDatos = await axios.get(`http://localhost:3001/api/comentarios/${id}`);
             setComentario(comentarioDatos.data);
+            setFormValues(comentarioDatos.data);
         } catch (error) {
             console.error('Error al traer los datos del comentario:', error);
         }
@@ -56,11 +57,18 @@ export const Comentario = () => {
         }
     };
 
+    const setFormValues = (comentario) => {
+        setValue('contenido', comentario.contenido);
+        setValue('fecha_creacion', comentario.fecha_creacion);
+        setValue('receta_id', comentario.receta_id);
+        setValue('chef_id', comentario.chef_id);
+    };
+
     useEffect(() => {
         getComentario(id);
         getRecetas();
         getChefs();
-    }, [])
+    }, []);
 
     return (
         <div className="container text-center">
@@ -104,6 +112,7 @@ export const Comentario = () => {
                                     <option key={r.id} value={r.id}>{r.nombre}</option>
                                 ))}
                             </select>
+                            <label htmlFor="receta_id">Receta</label>
                             {errors.receta_id && <span className='text-danger'>{errors.receta_id.message}</span>}
                         </div>
                         <div className="form-floating mb-3" style={{ width: '50%' }}>
@@ -117,6 +126,7 @@ export const Comentario = () => {
                                     <option key={c.id} value={c.id}>{c.nombre}</option>
                                 ))}
                             </select>
+                            <label htmlFor="chef_id">Chef</label>
                             {errors.chef_id && <span className='text-danger'>{errors.chef_id.message}</span>}
                         </div>
                         <div className="d-flex justify-content-between mt-2 mb-3" style={{ width: '50%' }}>

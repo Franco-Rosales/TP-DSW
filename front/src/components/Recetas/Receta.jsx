@@ -28,6 +28,7 @@ export const Receta = ({cancelar}) => {
         try {
             const recetaDatos = await axios.get(`http://localhost:3001/api/recetas/${id}`);
             setReceta(recetaDatos.data);
+            setFormValues(recetaDatos.data)
         } catch (error) { 
             console.error('Error al traer los datos de la receta:', error);
         }
@@ -44,6 +45,14 @@ export const Receta = ({cancelar}) => {
         } catch (error) {
             console.error('Error registrando la receta:', error);
         }
+    };
+
+    const setFormValues = (receta) => {
+        setValue('nombre', receta.nombre);
+        setValue('descripcion', receta.descripcion);
+        setValue('instrucciones', receta.instrucciones);
+        setValue('tiempo_preparacion', receta.tiempo_preparacion);
+        setValue('chef_id', receta.chef_id);
     };
 
     useEffect(() => {
@@ -110,6 +119,7 @@ export const Receta = ({cancelar}) => {
                     <option value="0">Seleccionar chef</option>
                     {chefs && chefs.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
                 </select>
+                <label htmlFor="chef_id">Chef</label>
                 </div>
                     <div className="d-flex justify-content-between mt-2 mb-3" style={{ width: '50%' }}>
                         <button type="submit" className="btn btn-primary">

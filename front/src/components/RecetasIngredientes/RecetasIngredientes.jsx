@@ -26,14 +26,9 @@ export const RecetasIngredientes = () => {
         }
     };
 
-    function handleBuscar() {
-        let url = "http://localhost:3001/api/recetas-ingredientes/";
-        if (nombreFiltro) {
-            url += `${nombreFiltro}&`;
-        }
-        axios.get(url).then(response => {
-            setRecetasIngredientes(response.data);
-        });
+    async function handleBuscar() {
+        const response = await axios.get(`http://localhost:3001/api/recetas-ingredientes?nombre=${nombreFiltro}`);
+        setRecetasIngredientes(response.data);
     };
 
     const getIngredienteName = (ingredienteId) => {
@@ -93,7 +88,7 @@ export const RecetasIngredientes = () => {
                     />
                     <label htmlFor="floatingInput">Buscar por ingrediente</label>
                 </div>
-                <button type="button" className="btn btn-primary">Buscar</button>
+                <button type="button" className="btn btn-primary" onClick={handleBuscar}>Buscar</button>
             </div>
             <button
                 type="button"

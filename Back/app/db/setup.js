@@ -31,7 +31,11 @@ const chefs = chefsModel(sequelize);
 const noticias = noticiasModel(sequelize);
 const recetasIngredientes = recetaIngredientesModel(sequelize);
 
+recetasIngredientes.belongsTo(recetas, { foreignKey: 'receta_id' });
+recetasIngredientes.belongsTo(ingredientes, { foreignKey: 'ingrediente_id' });
 
+recetas.hasMany(recetasIngredientes, { foreignKey: 'receta_id' });
+ingredientes.hasMany(recetasIngredientes, { foreignKey: 'ingrediente_id' });
 
 const iniciar = async (reset = false) => {
     try {

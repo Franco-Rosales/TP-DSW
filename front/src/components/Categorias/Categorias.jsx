@@ -68,13 +68,12 @@ function Categorias() {
                                 className="btn btn-success"
                                 onClick={() => mostrarFormulario()}
                             >
-                                Crear Nueva Categoria
+                                Registrar nueva categoria
                             </button>
                         </div>
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Numero de Categoria</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Descripcion</th>
                                     <th scope="col">Fecha de Agregado</th>
@@ -84,7 +83,6 @@ function Categorias() {
                             <tbody>
                                 {categorias.map((categoria) => (
                                     <tr key={categoria.id}>
-                                        <td>{categoria.id}</td>
                                         <td>{categoria.nombre}</td>
                                         <td>{categoria.descripcion}</td>
                                         <td>{categoria.fecha_agregado}</td>

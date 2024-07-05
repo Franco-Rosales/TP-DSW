@@ -23,7 +23,8 @@ export const Noticia = () => {
     const getNoticia = async (id) => {
         try {
             const response = await axios.get(`http://localhost:3001/api/noticias/${id}`);
-            setNoticia(response.data)
+            setNoticia(response.data);
+            setFormValues(response.data)
         } catch (error) {
             console.error('Error al obtener noticia:', error);
         }
@@ -44,6 +45,13 @@ export const Noticia = () => {
         } catch (error) {
             console.error('Error al registrar la noticia:', error);
         }
+    };
+
+    const setFormValues = (noticia) => {
+        setValue('titulo', noticia.titulo);
+        setValue('descripcion', noticia.descripcion);
+        setValue('fecha', noticia.fecha);
+        setValue('chef_id', noticia.chef_id);
     };
 
     useEffect(() => {
