@@ -9,6 +9,7 @@ export const Receta = ({cancelar}) => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [chefs, setChefs] = useState([]);
     const [categorias, setCategorias] = useState([]);
+    const [dificultad, setDificultad] = useState([]);
     const [receta, setReceta] = useState({});
     const navigate = useNavigate();
 
@@ -29,6 +30,15 @@ export const Receta = ({cancelar}) => {
         try {
             const response = await axios.get("http://localhost:3001/api/categorias");
             setCategorias(response.data);
+        } catch (error) {
+            console.error('Error al traer los datos de las categorias:', error);
+        }
+    };
+
+    const getDificultades = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/api/dificultades");
+            setDificultad(response.data);
         } catch (error) {
             console.error('Error al traer los datos de las categorias:', error);
         }
@@ -64,11 +74,13 @@ export const Receta = ({cancelar}) => {
         setValue('tiempo_preparacion', receta.tiempo_preparacion);
         setValue('chef_id', receta.chef_id);
         setValue('categoria_id', receta.categoria_id);
+        setValue('dificultad_id', receta.dificultad_id);
     };
 
     useEffect(() => {
         getChefs();
         getCategorias();
+        getDificultades();
         getReceta(id);
     }, []);
 
@@ -139,6 +151,13 @@ export const Receta = ({cancelar}) => {
                     {categorias && categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
                 </select>
                 <label htmlFor="categoria_id">Categoria</label>
+            </div>
+            <div className="form-floating mb-3" style={{ width: '50%' }}>
+                <select className="form-select"  defaultValue={receta.dificultad_id} {...register('dificultad_id')}>
+                    <option value="0">Seleccionar dificultad</option>
+                    {dificultad && dificultad.map(d => <option key={d.id} value={d.id}>{d.nombre}</option>)}
+                </select>
+                <label htmlFor="dificultad_id">Dificultad</label>
             </div>
                     <div className="d-flex justify-content-between mt-2 mb-3" style={{ width: '50%' }}>
                         <button type="submit" className="btn btn-primary">

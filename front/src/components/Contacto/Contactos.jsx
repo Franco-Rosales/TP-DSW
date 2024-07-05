@@ -35,7 +35,7 @@ export const Contactos = () => {
     };
 
     const getDomicilioName = (domicilioId) => {
-        const domicilio = domicilios.find(c => d.id === domicilioId);
+        const domicilio = domicilios.find(d => d.id === domicilioId);
         return domicilio ? domicilio.calle : 'Desconocido';
     };
 

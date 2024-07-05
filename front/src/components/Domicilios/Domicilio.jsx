@@ -7,7 +7,7 @@ import { NavBar } from "../NavBar/NavBar";
 
 export const Domicilio = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [domicilio, setDomicilio] = useState({});
     const {id} = useParams();
     const navigate = useNavigate();
@@ -20,6 +20,7 @@ export const Domicilio = () => {
         try {
             const domicilioDatos = await axios.get(`http://localhost:3001/api/domicilios/${id}`);
             setDomicilio(domicilioDatos.data);
+            setFormValues(domicilioDatos.data);
         } catch (error) {
             console.error('Error al traer los datos del domicilio:', error);
         }
@@ -36,6 +37,13 @@ export const Domicilio = () => {
         } catch (error) {
             console.error('Error registrando el domicilio:', error);
         }
+    };
+
+    const setFormValues = (domicilio) => {
+        setValue('calle', domicilio.calle);
+        setValue('nro_calle', domicilio.nro_calle);
+        setValue('barrio', domicilio.barrio);
+        setValue('fecha_carga', domicilio.fecha_carga);
     };
 
     useEffect(() => {

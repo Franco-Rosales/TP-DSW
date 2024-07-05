@@ -19,9 +19,10 @@ import { Noticia } from './components/Noticias/Noticia';
 import { Comentario } from './components/Comentarios/Comentario';
 import { Categoria } from './components/Categorias/Categoria';
 import { Contactos } from './components/Contacto/Contactos';
-import { Domicilio } from './components/Domicilio.jsx/Domicilio';
-import { Domicilios } from './components/Domicilio.jsx/Domicilios';
+import { Domicilio } from './components/Domicilios/Domicilio';
+import { Domicilios } from './components/Domicilios/Domicilios';
 import { Dificultades } from './components/Dificultades/Dificultades';
+import { Dificultad } from './components/Dificultades/Dificultad';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path='/contacto' element={<Contactos/>} />
         <Route path='/contacto/:id' element={<Contacto/>} />
         <Route path="/dificultades" element={<Dificultades/>}/>
+        <Route path="/dificultades/:id" element={<Dificultad/>}/>
         <Route path="/domicilios" element={<Domicilios/>}/>
         <Route path="/domicilio/:id" element={<Domicilio/>}/>
       </Routes>

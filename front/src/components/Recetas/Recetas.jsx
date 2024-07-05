@@ -9,6 +9,7 @@ const Recetas = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
     const [categorias, setCategorias] = useState([]);
+    const [dificultad, setDificultad] = useState([]);
 
     const getRecetas = async () => {
         try {
@@ -34,6 +35,15 @@ const Recetas = () => {
             setCategorias(response.data);
         } catch (error) {
             console.error('Error al traer los datos de las categorias:', error);
+        }
+    };
+
+    const getDificultades = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/api/dificultades");
+            setDificultad(response.data);
+        } catch (error) {
+            console.error('Error al traer los datos de las dificultades:', error);
         }
     };
 
@@ -67,10 +77,16 @@ const Recetas = () => {
         return categoria ? categoria.nombre : 'Desconocido';
     };
 
+    const getDificultadesName = (dificultadId) => {
+        const dif = dificultad.find(c => c.id === dificultadId);
+        return dif ? dif.nombre : 'Desconocido';
+    };
+
     useEffect(() => {
         getRecetas();
         getChefs();
         getCategorias();
+        getDificultades();
     }, []);
 
     return (
@@ -113,6 +129,7 @@ const Recetas = () => {
                                 <th scope="col">Fecha De Creacion</th>
                                 <th scope="col">Chef</th>
                                 <th scope="col">Categoria</th>
+                                <th scope="col">Dificultad</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -126,6 +143,7 @@ const Recetas = () => {
                                     <td>{r.fecha_creacion}</td>
                                     <td>{getChefName(r.chef_id)}</td>
                                     <td>{getCategoriaName(r.categoria_id)}</td>
+                                    <td>{getDificultadesName(r.dificultad_id)}</td>
                                     <td>
                                         <Link to={`/receta/${r.id}`}>
                                         <button
