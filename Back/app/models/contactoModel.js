@@ -28,6 +28,13 @@ const ContactoModel = (sequelize) => {
             fecha_agregado: {
                 type: DataTypes.DATEONLY,
                 defaultValue: DataTypes.NOW
+            },
+            domicilio_id: {
+                type: DataTypes.INTEGER,
+                references: {
+                    model: 'domicilios', 
+                    key: 'id'
+                }
             }
         },
         {
@@ -35,6 +42,12 @@ const ContactoModel = (sequelize) => {
             tableName: 'contacto'
         }
     ); 
+
+    contacto.associate = (models) => {
+        contacto.hasOne(models.Domicilio, {
+            foreignKey: 'domicilio_id'
+        });
+    };
 
     return contacto;
 };

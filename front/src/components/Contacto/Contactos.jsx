@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 export const Contactos = () => {
 
     const [contactos, setContactos] = useState([]);
+    const [domicilios, setDomicilios] = useState([]);
     const [nombreFiltro, setNombreFiltro] = useState('');
     const navigate = useNavigate();
 
@@ -24,8 +25,23 @@ export const Contactos = () => {
         }
     };
 
+    const getDomicilios = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/api/domicilios");
+            setDomicilios(response.data);
+        } catch (error) {
+            console.error('Error al traer los datos de los domicilios:', error);
+        }
+    };
+
+    const getDomicilioName = (domicilioId) => {
+        const domicilio = domicilios.find(c => d.id === domicilioId);
+        return domicilio ? domicilio.calle : 'Desconocido';
+    };
+
     useEffect(() => {
         getContactos();
+        getDomicilios()
     }, []);
 
     function handleBuscar() {
@@ -79,6 +95,7 @@ export const Contactos = () => {
                                     <th scope="col">Email</th>
                                     <th scope="col">Telefono</th>
                                     <th scope="col">Mensaje</th>
+                                    <th scope="col">Domicilio</th>
                                     <th scope="col">Fecha de Agregado</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -91,6 +108,7 @@ export const Contactos = () => {
                                         <td>{contacto.email}</td>
                                         <td>{contacto.telefono}</td>
                                         <td>{contacto.mensaje}</td>
+                                        <td>{getDomicilioName(contacto.domicilio_id)}</td>
                                         <td>{contacto.fecha_agregado}</td>
                                         <td>
                                             <Link to={`/contacto/${contacto.id}`}>

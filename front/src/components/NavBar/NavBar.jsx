@@ -25,6 +25,9 @@ export const NavBar = () => {
         <Nav.Link as={Link} to="/recetas-ingredientes" className='nav-link text-light'>Receta Ingredientes</Nav.Link>
         </Nav.Item>
         <Nav.Item>
+          <Nav.Link as={Link} to="/dificultades" className='nav-link text-light'>Dificultad</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
           <Nav.Link as={Link} to="/noticias" className='nav-link text-light'>Noticias</Nav.Link>
         </Nav.Item>
         <Nav.Item>  
@@ -32,6 +35,9 @@ export const NavBar = () => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link as={Link} to="/categorias" className='nav-link text-light'>Categorias</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} to="/domicilios" className='nav-link text-light'>Domicilios</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link as={Link} to="/contacto" className='nav-link text-light'>Contacto</Nav.Link>

@@ -9,11 +9,14 @@ const DificultadModel = (sequelize) => {
                 autoIncrement: true,
                 primaryKey: true
             },
-            descripcion: {
+            nombre: {
                 type: DataTypes.STRING
             },
-            valor: {
+            edad_recomendada: {
                 type: DataTypes.INTEGER
+            },
+            descripcion: {
+                type: DataTypes.STRING
             },
             fechaCarga: {
                 type: DataTypes.DATEONLY
@@ -21,14 +24,12 @@ const DificultadModel = (sequelize) => {
         },
         {
             timestamps: false,
-            tableName: 'dificultad'
+            tableName: 'dificultades'
         }
     );
 
-    // Definición de relaciones
     Dificultad.associate = (models) => {
-        // Relación muchos a uno con Receta
-        Dificultad.belongsTo(models.Receta, { foreignKey: 'receta_id' });
+        Dificultad.hasMany(models.Receta, { foreignKey: 'dificultad_id' });
     };
 
     return Dificultad;

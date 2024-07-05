@@ -4,19 +4,16 @@ const PORT = process.env.PORT || 3001;
 
 // Importar los controladores y rutas
 const db = require('./app/db/setup');
-const valoracionesRoutes = require('./app/routes/valoracionesRoutes');
 const categoriasRoutes = require('./app/routes/categoriasRoutes');
 const comentariosRoutes = require('./app/routes/comentariosRoutes');
-const ingredientesRecetasMedidasRoutes = require('./app/routes/ingredientesRecetasMedidasRoutes');
 const ingredientesRoutes = require('./app/routes/ingredientesRoutes');
 const contactoRoutes = require('./app/routes/contactoRoutes');
-const pasosPreparacionRoutes = require('./app/routes/pasosPreparacionRoutes');
-const recetasCategoriasRoutes = require('./app/routes/recetasCategoriasRoutes');
 const recetasRoutes = require('./app/routes/recetasRoutes');
 const chefsRoutes = require('./app/routes/chefsRoutes');
 const recetaIngredientesRoute = require('./app/routes/recetasIngredientesRoutes');
 const noticiasRoutes = require('./app/routes/noticiasRoutes');
-
+const dificultadesRoutes = require('./app/routes/dificultadesRoutes');
+const domiciliosRoutes = require('./app/routes/domiciliosRoutes');
 // Inicializar la aplicación Express
 const app = express();
 
@@ -33,17 +30,15 @@ db.iniciar();
 // Rutas
 
 app.use('/api/noticias', noticiasRoutes); 
-app.use('/api/valoraciones', valoracionesRoutes);
 app.use('/api/categorias', categoriasRoutes);
 app.use('/api/comentarios', comentariosRoutes);
-app.use('/api/ingredientes-recetas-medidas', ingredientesRecetasMedidasRoutes);
 app.use('/api/ingredientes', ingredientesRoutes);
 app.use('/api/contacto', contactoRoutes);
-app.use('/api/pasos-preparacion', pasosPreparacionRoutes);
-app.use('/api/recetas-categorias', recetasCategoriasRoutes);
 app.use('/api/recetas', recetasRoutes);
 app.use('/api/chefs', chefsRoutes);
 app.use('/api/recetas-ingredientes', recetaIngredientesRoute);
+app.use('/api/dificultades', dificultadesRoutes);
+app.use('/api/domicilios', domiciliosRoutes);
 
 // Otras rutas aquí si las tienes
 // app.use('/api/otra-ruta', otraRuta);

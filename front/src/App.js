@@ -19,6 +19,9 @@ import { Noticia } from './components/Noticias/Noticia';
 import { Comentario } from './components/Comentarios/Comentario';
 import { Categoria } from './components/Categorias/Categoria';
 import { Contactos } from './components/Contacto/Contactos';
+import { Domicilio } from './components/Domicilio.jsx/Domicilio';
+import { Domicilios } from './components/Domicilio.jsx/Domicilios';
+import { Dificultades } from './components/Dificultades/Dificultades';
 
 
 function App() {
@@ -44,6 +47,9 @@ function App() {
         <Route path="/categorias/:id" element={<Categoria/>}/>
         <Route path='/contacto' element={<Contactos/>} />
         <Route path='/contacto/:id' element={<Contacto/>} />
+        <Route path="/dificultades" element={<Dificultades/>}/>
+        <Route path="/domicilios" element={<Domicilios/>}/>
+        <Route path="/domicilio/:id" element={<Domicilio/>}/>
       </Routes>
     </div>
     <Footer/>

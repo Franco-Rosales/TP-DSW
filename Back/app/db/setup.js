@@ -3,14 +3,12 @@ const categoriasModel = require('../models/categoriasModels');
 const comentariosModel = require('../models/comentariosModels');
 const ingredientesModel = require('../models/ingredientesModels');
 const recetasModel = require('../models/recetasModels');
-const ingredientesRecetasModel = require('../models/ingredientesRecetasMedidasModels');
-const recetasCategoriasModel = require('../models/recetasCategoriasModels');
 const contactoModel = require('../models/contactoModel');
-const pasosPreparacionModel = require('../models/pasosPreparacionModels');
-const valoracionesModel = require('../models/valoracionesModel');
 const chefsModel = require('../models/chefsModels');
 const noticiasModel = require('../models/noticiasModels');
-const recetaIngredientesModel = require('../models/recetaIngredienteModels')
+const recetaIngredientesModel = require('../models/recetaIngredienteModels');
+const domiciliosModel = require('../models/domiciliosModel');
+const dificultadesModel = require('../models/dificultadesModel');
 
 
 const sequelize = new Sequelize({
@@ -22,14 +20,12 @@ const categorias = categoriasModel(sequelize);
 const comentarios = comentariosModel(sequelize);
 const ingredientes = ingredientesModel(sequelize);
 const recetas = recetasModel(sequelize);
-const ingredientesRecetas = ingredientesRecetasModel(sequelize);
-const recetasCategorias = recetasCategoriasModel(sequelize);
 const contacto = contactoModel(sequelize);
-const pasosPreparacion = pasosPreparacionModel(sequelize);
-const valoraciones = valoracionesModel(sequelize);
 const chefs = chefsModel(sequelize);
 const noticias = noticiasModel(sequelize);
 const recetasIngredientes = recetaIngredientesModel(sequelize);
+const domicilios = domiciliosModel(sequelize);
+const dificultades = dificultadesModel(sequelize);
 
 recetasIngredientes.belongsTo(recetas, { foreignKey: 'receta_id' });
 recetasIngredientes.belongsTo(ingredientes, { foreignKey: 'ingrediente_id' });
@@ -50,5 +46,5 @@ const iniciar = async (reset = false) => {
 };
 
 
-const db = { iniciar, categorias, comentarios, ingredientes, recetas, ingredientesRecetas, recetasCategorias, contacto, pasosPreparacion, valoraciones,chefs, noticias, recetasIngredientes };
+const db = { iniciar, categorias, comentarios, ingredientes, recetas, contacto,chefs, noticias, recetasIngredientes, dificultades, domicilios };
 module.exports = db;

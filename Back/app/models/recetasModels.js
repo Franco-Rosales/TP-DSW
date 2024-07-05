@@ -37,6 +37,13 @@ const RecetaModel = (sequelize) => {
                     model: 'categorias', 
                     key: 'id'
                 }
+            },
+            dificultad_id: {
+                type: DataTypes.INTEGER,
+                references: {
+                    model: 'dificultades', 
+                    key: 'id'
+                }
             }
         },
         {
@@ -64,6 +71,8 @@ const RecetaModel = (sequelize) => {
 
         Receta.belongsTo(models.Chef, { foreignKey: 'chef_id' });
 
+        Receta.belongsTo(models.Dificultad, { foreignKey: 'dificultad_id' });
+        
         Receta.belongsTo(models.Categoria, { foreignKey: 'categoria_id' });
     };
 

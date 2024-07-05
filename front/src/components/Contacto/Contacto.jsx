@@ -7,11 +7,21 @@ function Contacto() {
 
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [contacto, setContacto] = useState({});
+    const [domicilios, setDomicilios] = useState([]);
     const {id} = useParams();
     const navigate = useNavigate();
 
     const volver = () => {
         navigate('/contacto');
+    };
+
+    const getDomicilios = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/api/domicilios");
+            setDomicilios(response.data);
+        } catch (error) {
+            console.error('Error al traer los datos de los domicilios:', error);
+        }
     };
 
     const getContacto = async (id) => {
@@ -44,10 +54,12 @@ function Contacto() {
         setValue('telefono', contacto.telefono);
         setValue('mensaje', contacto.mensaje);
         setValue('fecha_agregado', contacto.fecha_agregado);
+        setValue('domicilio_id', contacto.domicilio_id)
     };
 
     useEffect(() => {
         getContacto(id);
+        getDomicilios()
     }, []);
 
     return (
@@ -104,6 +116,13 @@ function Contacto() {
                             />
                             <label htmlFor="telefonoContacto">Telefono</label>
                             {errors.telefono && <span className='text-danger'>{errors.telefono.message}</span>}
+                        </div>
+                        <div className="form-floating mb-3" style={{ width: '50%' }}>
+                            <select className="form-select"  defaultValue={contacto.domicilio_id} {...register('domicilio_id')}>
+                                <option value="0">Seleccionar domicilio</option>
+                                {domicilios && domicilios.map(d => <option key={d.id} value={d.id}>{d.calle}</option>)}
+                            </select>
+                            <label htmlFor="chef_id">Domicilio</label>
                         </div>
                         <div className="form-floating mb-3" style={{ width: '50%' }}>
                             <textarea
