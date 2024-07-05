@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export const Categoria = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [categoria, setCategoria] = useState({});
     const {id} = useParams();
     const navigate = useNavigate();
@@ -18,6 +18,7 @@ export const Categoria = () => {
         try {
             const categoriasDatos = await axios.get(`http://localhost:3001/api/categorias/${id}`);
             setCategoria(categoriasDatos.data);
+            setFormValues(categoriasDatos.data)
         } catch (error) {
             console.error('Error al traer los datos de la categoria:', error);
         }
@@ -34,6 +35,12 @@ export const Categoria = () => {
         } catch (error) {
             console.error('Error registrando a la categoria:', error);
         }
+    };
+
+    const setFormValues = (categoria) => {
+        setValue('nombre', categoria.nombre);
+        setValue('descripcion', categoria.descripcion);
+        setValue('fecha_agregado', categoria.fecha_agregado);
     };
 
     useEffect(() => {

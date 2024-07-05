@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function Contacto() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [contacto, setContacto] = useState({});
     const {id} = useParams();
     const navigate = useNavigate();
@@ -18,6 +18,7 @@ function Contacto() {
         try {
             const contactoDatos = await axios.get(`http://localhost:3001/api/contacto/${id}`);
             setContacto(contactoDatos.data);
+            setFormValues(contactoDatos.data);
         } catch (error) {
             console.error('Error al traer los datos del contacto:', error);
         }
@@ -34,6 +35,15 @@ function Contacto() {
         } catch (error) {
             console.error('Error registrando al contacto:', error);
         }
+    };
+
+    const setFormValues = (contacto) => {
+        setValue('nombre', contacto.nombre);
+        setValue('apellido', contacto.apellido);
+        setValue('email', contacto.email);
+        setValue('telefono', contacto.telefono);
+        setValue('mensaje', contacto.mensaje);
+        setValue('fecha_agregado', contacto.fecha_agregado);
     };
 
     useEffect(() => {

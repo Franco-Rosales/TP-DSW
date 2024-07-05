@@ -5,7 +5,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 
 export const Ingrediente = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [ingrediente, setIngrediente] = useState({});
     const {id} = useParams();
     const navigate = useNavigate();
@@ -18,6 +18,7 @@ export const Ingrediente = () => {
         try {
             const ingredienteDatos = await axios.get(`http://localhost:3001/api/ingredientes/${id}`);
             setIngrediente(ingredienteDatos.data);
+            setFormValues(ingredienteDatos.data);
         } catch (error) {
             console.error('Error al traer los datos del ingrediente:', error);
         }
@@ -34,6 +35,12 @@ export const Ingrediente = () => {
         } catch (error) {
             console.error('Error registrando el ingrediente:', error);
         }
+    };
+
+    const setFormValues = (ingrediente) => {
+        setValue('nombre', ingrediente.nombre);
+        setValue('popularidad', ingrediente.popularidad);
+        setValue('fecha_agregado', ingrediente.fecha_agregado);
     };
 
     useEffect(() => {

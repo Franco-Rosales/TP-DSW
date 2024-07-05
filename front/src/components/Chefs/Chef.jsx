@@ -5,10 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export const Chef = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [chef, setChef] = useState({});
     const {id} = useParams();
     const navigate = useNavigate();
+    const [editar, setEditar] = useState(false); 
 
     const volver = () => {
         navigate('/chefs');
@@ -18,6 +19,7 @@ export const Chef = () => {
         try {
             const chefDatos = await axios.get(`http://localhost:3001/api/chefs/${id}`);
             setChef(chefDatos.data);
+            setFormValues(chefDatos.data);
         } catch (error) {
             console.error('Error al traer los datos del chef:', error);
         }
@@ -34,6 +36,13 @@ export const Chef = () => {
         } catch (error) {
             console.error('Error registrando al chef:', error);
         }
+    };
+
+    const setFormValues = (chef) => {
+        setValue('nombre', chef.nombre);
+        setValue('biografia', chef.biografia);
+        setValue('cantidad_recetas', chef.cantidad_recetas);
+        setValue('fecha_nacimiento', chef.fecha_nacimiento);
     };
 
     useEffect(() => {
